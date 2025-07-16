@@ -1,0 +1,9 @@
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:102:25:UTIL_LCD_TRACE_Init	2
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:131:6:UTIL_LCD_TRACE_DeInit	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:152:6:UTIL_LCD_TRACE_SetHeader	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:178:6:UTIL_LCD_TRACE_SetFooter	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:205:6:UTIL_LCD_TRACE_ClearTextZone	2
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:222:1:__io_putchar	11
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:300:6:UTIL_LCD_TRACE_UpdateDisplay	5
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:341:25:UTIL_LCD_TRACE_ScrollBack	12
+C:/projects/STM32-H750B-DK/LTDC_Paint/Utilities/Lcd_Trace/lcd_trace.c:405:25:UTIL_LCD_TRACE_ScrollForward	9

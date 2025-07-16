@@ -1,0 +1,3 @@
+C:/projects/STM32-H750B-DK/LTDC_Paint/Src/system_stm32h7xx.c:146:6:SystemInit	4	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/Src/system_stm32h7xx.c:271:6:SystemCoreClockUpdate	40	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/Src/system_stm32h7xx.c:529:6:ExitRun0Mode	4	static

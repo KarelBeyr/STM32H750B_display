@@ -1,0 +1,16 @@
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:187:9:BSP_I2C4_Init	4
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:238:9:BSP_I2C4_DeInit	3
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:266:26:MX_I2C4_Init	4
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:312:9:BSP_I2C4_WriteReg	3
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:349:9:BSP_I2C4_ReadReg	3
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:386:9:BSP_I2C4_WriteReg16	3
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:423:9:BSP_I2C4_ReadReg16	3
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:459:9:BSP_I2C4_IsReady	2
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:481:9:BSP_GetTick	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:569:17:I2C_GetTiming	7
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:607:13:I2C_Compute_PRESC_SCLDEL_SDADEL	11
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:688:17:I2C_Compute_SCLL_SCLH	12
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:766:13:I2C4_MspInit	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:811:13:I2C4_MspDeInit	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:837:16:I2C4_WriteReg	2
+C:/projects/STM32-H750B-DK/LTDC_Paint/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_bus.c:856:16:I2C4_ReadReg	2
