@@ -38,17 +38,11 @@ typedef enum {
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-USBH_HandleTypeDef  hUSB_Host;
-FATFS USBDISK_FatFs;  /* File system object for USB Disk logical drive */
-FIL MyFile;           /* File object */
-char USB_Path[4];     /* USB Disk logical drive path */
 
  DMA2D_HandleTypeDef hdma2d_discovery;
 
-static uint32_t Radius = 2;
 uint16_t x = 0, y = 0;
  uint32_t x_size, y_size;
-static TS_State_t  TS_State;
 TS_Init_t *hTS;
 
 const uint32_t aBMPHeader[14]=         
@@ -61,14 +55,9 @@ MSC_ApplicationTypeDef Appli_state = APPLICATION_IDLE;
 uint8_t workBuffer[_MAX_SS];
 
 /* Private function prototypes -----------------------------------------------*/
-static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id);
 static void Draw_Menu(void);
-static void GetPosition(void);
 static void SystemClock_Config(void);
 static void Error_Handler(void);
-static void Save_Picture(void);
-static void Update_Color(void);
-static void Update_Size(uint8_t size);
 static void CPU_CACHE_Enable(void);
 static void CPU_CACHE_Disable(void);
 static void MPU_Config(void);
@@ -120,222 +109,18 @@ int main(void)
   hTS->Accuracy = 5;
   /* Touchscreen initialization */
   BSP_TS_Init(0, hTS);
-
-  /* Enable the USB voltage level detector */
-  HAL_PWREx_EnableUSBVoltageDetector();
   
-  /* Init Host Library */
-  if (USBH_Init(&hUSB_Host, USBH_UserProcess, 0) != USBH_OK)
-  {
-    /* USB Initialization Error */
-    Error_Handler();
-  }
-  
-  /* Add Supported Class */
-  USBH_RegisterClass(&hUSB_Host, USBH_MSC_CLASS);
-  
-  /* Start Host Process */
-  if (USBH_Start(&hUSB_Host) != USBH_OK)
-  {
-    /* USB Initialization Error */
-    Error_Handler();
-  }
-  
-  
-  /*##-4- Link the USB Mass Storage disk I/O driver ##########################*/
-  if(FATFS_LinkDriver(&USBH_Driver, USB_Path) != 0) 
-  {
-    /* FatFs Initialization Error */
-    Error_Handler();
-  }
-  
-  /*##-5- Register the file system object to the FatFs module ################*/
-  if(f_mount(&USBDISK_FatFs, (TCHAR const*)USB_Path, 0) != FR_OK)
-  {
-    /* FatFs Initialization Error */
-    Error_Handler();
-  }
   
   /*##-6- Draw the menu ######################################################*/
-  CPU_CACHE_Disable();
+  //CPU_CACHE_Disable();
   Draw_Menu();  
   CPU_CACHE_Enable();
   /* Infinite loop */  
   while (1)
   { 
-    /*##-7- Configure the touch screen and Get the position ##################*/    
-    GetPosition();
-    
-    USBH_Process(&hUSB_Host);
   }
 }
 
-/**
-  * @brief  User Process
-  * @param  None
-  * @retval None
-  */
-static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
-{  
-  switch (id)
-  { 
-  case HOST_USER_DISCONNECTION:
-    Appli_state = APPLICATION_IDLE;
-    if (f_mount(&USBDISK_FatFs, "", 0) != FR_OK)
-    {
-      /* FatFs Initialization Error */
-      Error_Handler();
-    }
-    break; 
-  case HOST_USER_CLASS_ACTIVE:
-    Appli_state = APPLICATION_RUNNIG;
-    break;
-  }
-}
-
-/**
-  * @brief  Configures and gets Touch screen position.
-  * @param  None
-  * @retval None
-  */
-static void GetPosition(void)
-{
-  static uint32_t color_width;  
-  static uint32_t color ;
-  
-  if (x_size == 640)
-  {
-    color_width = 36;
-  }
-  else
-  {
-    color_width = 19;
-  }
-  
-  /* Get Touch screen position */
-  BSP_TS_GetState(0,&TS_State); 
-  
-  /* Read the coordinate */
-  x = TS_State.TouchX;
-  y = TS_State.TouchY;
-  
-  if ((TS_State.TouchDetected) & (x > (67 + Radius)) & (y > (7 + Radius) ) & ( x < (x_size-(7  + Radius )) ) & (y < (y_size-(67 + Radius )) ))
-  {
-    UTIL_LCD_FillCircle((x), (y), Radius,UTIL_LCD_GetTextColor());
-  }
-  else if ((TS_State.TouchDetected) & (x > 0 ) & ( x < 50 ))
-  { 
-    if ((TS_State.TouchDetected) & ( y > 0 ) & ( y < color_width ))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & ( y > color_width ) & (y < (2 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_YELLOW);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (2 * color_width)) & (y < (3 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ORANGE);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (3 * color_width)) & (y < (4 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_LIGHTMAGENTA);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (4 * color_width)) & (y < (5 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_DARKGREEN);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (5 * color_width)) &(y < (6 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (6 * color_width)) &(y < (7 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BROWN);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (7 * color_width)) & (y < (8 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (8 * color_width)) & (y < (9 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_DARKMAGENTA);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (9 * color_width)) & (y < (10 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_CYAN);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (10 * color_width)) & (y < (11 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_DARKBLUE);
-      Update_Size(Radius);
-    }
-    else if ((TS_State.TouchDetected) & (y > (11 * color_width)) & (y < (12 * color_width)))
-    {
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
-      Update_Size(Radius);
-    }    
-    else if ((TS_State.TouchDetected) &  (y > (12 * color_width)) & (y < (13 * color_width)))
-    {
-      /* Get the current text color */
-      color = UTIL_LCD_GetTextColor();
-      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
-      /* Clear the working window */
-      UTIL_LCD_FillRect(68, 8, (x_size - 75), (y_size - 75), UTIL_LCD_COLOR_WHITE);
-      UTIL_LCD_SetTextColor(color);
-    }
-    else
-    {
-      x = 0;
-      y = 0;
-    }
-    Update_Color();    
-  }
-  else if ((TS_State.TouchDetected) & (x > 70 ) & (y > (12 * color_width)) & (y < (13 * color_width)) & ( x < 120 ))
-  {    
-    Radius = 20;
-    Update_Size(Radius);
-  }
-  else if ((TS_State.TouchDetected) & (x > 120 ) & (y > (12 * color_width)) & (y < (13 * color_width)) & ( x < 170 ))
-  {    
-    Radius = 15;
-    Update_Size(Radius);
-  }
-  else if ((TS_State.TouchDetected) & (x > 170 ) & (y > (12 * color_width)) & (y < (13 * color_width)) & ( x < 220 ))
-  {    
-    Radius = 10;
-    Update_Size(Radius);
-  }
-  else if ((TS_State.TouchDetected) & (x > 220 ) & (y > (12 * color_width)) & (y < (13 * color_width)) & ( x < 270 ))
-  {    
-    Radius = 5;
-    Update_Size(Radius);
-  }
-  else if ((TS_State.TouchDetected) & (x > 270 ) & (y > (12 * color_width)) & (y < (13 * color_width)) & ( x < 320 ))
-  {    
-    Radius = 2;
-    Update_Size(Radius);
-  }  
-  else if ((TS_State.TouchDetected) & (((x > (x_size-5) ) & (y > (12 * color_width)) & (y < (13 * color_width))) | (( x < 55 ) & ( y < 5 ))))
-  {    
-    TS_State.TouchX = 0;
-    TS_State.TouchY = 0;
-  }  
-  else if ((TS_State.TouchDetected) & (x > 320) & (y > (y_size - 50)) & (x < 370) & (y < y_size ))
-  {   
-    Save_Picture();
-  }    
-}
 
 /**
   * @brief  Draws the menu.
@@ -377,137 +162,13 @@ static void Draw_Menu(void)
   UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
   UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLACK);
   UTIL_LCD_SetFont(&Font32);
-  UTIL_LCD_DisplayStringAt(10, 10, (uint8_t *)"Hello world!", LEFT_MODE);
+  for (int i = 0; i < 8; i++) {
+	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Hello world! Hello world!", LEFT_MODE);
+  }
 //  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
 //  UTIL_LCD_FillRect(380, (y_size - 40), 30, 30, UTIL_LCD_COLOR_BLACK);
 //  UTIL_LCD_FillCircle(450, (y_size- 24), Radius, UTIL_LCD_COLOR_BLACK);
 }
-
-/**
-  * @brief  Save the picture in USB Disk.
-  * @param  None
-  * @retval None
-  */
-void Save_Picture(void)
-{ 
-  FRESULT res1, res2;    /* FatFs function common result code */
-  uint32_t byteswritten; /* File write count */
-  uint32_t sourceAddress = LCD_LAYER_0_ADDRESS + ((x_size * (y_size - 61) + 60) * 4);
-  uint32_t index = 0;
-   MX_LTDC_LayerConfig_t config; 
-  /* Configure the DMA2D For ARGB8888 to RGB888 conversion */
-  hdma2d_discovery.Init.Mode         = DMA2D_M2M_PFC;
-  hdma2d_discovery.Init.ColorMode    = DMA2D_OUTPUT_RGB888;
-  hdma2d_discovery.Init.OutputOffset = 0;     
-  
-  /* Foreground Configuration */
-  hdma2d_discovery.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
-  hdma2d_discovery.LayerCfg[1].InputAlpha = 0xFF;
-  hdma2d_discovery.LayerCfg[1].InputColorMode = DMA2D_INPUT_ARGB8888;
-  hdma2d_discovery.LayerCfg[1].InputOffset = 0;
- 
-  hdma2d_discovery.Instance = DMA2D;  
-  config.X0          = 0;
-  config.X1          = 480U;
-  config.Y0          = 0;
-  config.Y1          = 272U;
-  config.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
-  config.Address     = LCD_LAYER_1_ADDRESS;
-  BSP_LCD_ConfigLayer(0, 1, &config);
-  BSP_LCD_SetActiveLayer(0,1);
-  UTIL_LCD_SetLayer(1);
-  BSP_LCD_SetLayerVisible(0, 1, ENABLE);
-  BSP_LCD_SetColorKeying(0, 1,UTIL_LCD_COLOR_WHITE); 
-  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_DARKRED);
-  UTIL_LCD_SetFont(&Font20);
-  
-  /* Turn LED1 */
-  BSP_LED_Off(LED1);
-  
-  if (Appli_state == APPLICATION_RUNNIG)
-  {
-    UTIL_LCD_DisplayStringAt(10, (y_size-100), (uint8_t *)"Saving ...", RIGHT_MODE);
-    HAL_DMA2D_Init(&hdma2d_discovery);
-    HAL_DMA2D_ConfigLayer(&hdma2d_discovery, 1);
-    /*##-2- Create and Open a new bmp file object with write access ##########*/
-    if(f_open(&MyFile, "image.bmp", FA_CREATE_ALWAYS | FA_WRITE) != FR_OK)
-    {
-      /* 'image.bmp' file Open for write Error */
-      Error_Handler();
-    }
-    else
-    {
-      /*##-3- Write data to the BMP file #####################################*/
-      /* Write the BMP header */ 
-      res1 = f_write(&MyFile, (uint32_t *)aBMPHeader, 54, (void *)&byteswritten);        
-      
-      /* Note that BMP file is organized as follow :
-         -  first a header of 54 bytes
-         - then pixels scan lines ordered from last line of the image to first one.
-         It is then mandatory to reorder the image line from last line to first.
-      */
-      for(index=0; index < (y_size - 60); index++)
-      {        
-        /* Convert a Line from ARGB8888 to RGB888 using the DMA2D */
-        if (HAL_DMA2D_Start(&hdma2d_discovery, sourceAddress, CONVERTED_LINE_BUFFER, (x_size - 60), 1) == HAL_OK)
-        {
-          /* Polling For DMA transfer */  
-          HAL_DMA2D_PollForTransfer(&hdma2d_discovery, 10);
-        }
-        
-        /*As the DMA2D destination address is located in the D1 AXI-SRAM which 
-        is cacheable, it is necessary to invalidate the data cache the DMA2D transfer 
-        before saving these data to the bmp file using the CPU */
-        SCB_InvalidateDCache_by_Addr((uint32_t *)CONVERTED_LINE_BUFFER, ((x_size-60)*3)); 
-        
-        /* Save Converted line to the bmp file */
-        res2 = f_write(&MyFile, (uint32_t *)CONVERTED_LINE_BUFFER, ((x_size-60)*3), (void *)&byteswritten);
-        if((res2 != FR_OK) || (byteswritten == 0))
-        {
-          break;
-        }
-        /* Upodate DMA2D source Address */
-        sourceAddress -= x_size*4;
-      }
-      
-      if((res1 != FR_OK) || (res2 != FR_OK) || (byteswritten == 0))
-      {
-        /* 'image' file Write or EOF Error */
-        UTIL_LCD_DisplayStringAt(10, (y_size-100), (uint8_t *)" Aborted...", RIGHT_MODE);
-        /* Wait for 2s */
-        HAL_Delay(2000);
-        BSP_LCD_SetLayerVisible(0, 1, DISABLE);
-        UTIL_LCD_SetLayer(0);
-      }
-      else
-      {
-        /*##-4- Close the open bmp file #####################################*/
-        f_close(&MyFile);
-        /* Success of the demo: no error occurrence */
-        BSP_LED_On(LED1);
-        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_DARKGREEN);
-        UTIL_LCD_DisplayStringAt(10, (y_size-100), (uint8_t *)" Saved     ", RIGHT_MODE);
-        /* Wait for 2s */
-        HAL_Delay(2000);
-        BSP_LCD_SetLayerVisible(0, 1, DISABLE);
-        UTIL_LCD_SetLayer(0);
-      }
-    }
-  }
-  else
-  {
-    /* USB not connected */
-    UTIL_LCD_DisplayStringAt(10, (y_size-100), (uint8_t *)"USB KO... ", RIGHT_MODE);
-    /* Wait for 2s */
-    HAL_Delay(2000);
-    /* Disable the Layer 2 */
-    BSP_LCD_SetLayerVisible(0,1, DISABLE);
-    /* Select Layer 1 */
-    UTIL_LCD_SetLayer(0);
-  }
-}
-
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -519,45 +180,6 @@ static void Error_Handler(void)
   while(1)
   {
   }
-}
-
-/**
-  * @brief  Update the selected color
-  * @param  None
-  * @retval None
-  */
-static void Update_Color(void)
-{
-  static uint32_t color;
-  
-  /* Get the current text color */
-  color = UTIL_LCD_GetTextColor();
-  /* Update the selected color icon */
-  UTIL_LCD_FillRect(380, (y_size-40), 30, 30, color);
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);    
-  UTIL_LCD_DrawRect(380, (y_size-40), 30, 30, color);
-  UTIL_LCD_SetTextColor(color);  
-}
-
-/**
-  * @brief  Updates the selected size
-  * @param  size: Size to be updated
-  * @retval None
-  */
-static void Update_Size(uint8_t size)
-{
-  static uint32_t color;
-  
-  /* Get the current text color */ 
-  color = UTIL_LCD_GetTextColor();
-  /* Update the selected size icon */
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
-  UTIL_LCD_FillCircle(450, (y_size-24), 20, UTIL_LCD_COLOR_WHITE);
-  UTIL_LCD_SetTextColor(color);  
-  UTIL_LCD_FillCircle(450, (y_size-24), size, color );
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);    
-  UTIL_LCD_DrawCircle(450, (y_size-24), size, UTIL_LCD_COLOR_BLACK);
-  UTIL_LCD_SetTextColor(color);  
 }
 
 /**
