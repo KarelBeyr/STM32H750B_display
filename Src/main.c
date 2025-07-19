@@ -61,6 +61,7 @@ static void Error_Handler(void);
 static void CPU_CACHE_Enable(void);
 static void CPU_CACHE_Disable(void);
 static void MPU_Config(void);
+static void GPIO_Init(void);
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -86,6 +87,8 @@ int main(void)
   
   /* Configure the system clock to 400 MHz */
   SystemClock_Config(); 
+
+  GPIO_Init();
     
   /* Configure LED1 */
   BSP_LED_Init(LED1);
@@ -170,6 +173,87 @@ static void Draw_Menu(void)
 //  UTIL_LCD_FillCircle(450, (y_size- 24), Radius, UTIL_LCD_COLOR_BLACK);
 }
 
+static void GPIO_Init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+	  /*Configure GPIO pin Output Level */
+	  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_3, GPIO_PIN_RESET);
+
+	  /*Configure GPIO pin Output Level */
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+
+	  /*Configure GPIO pin Output Level */
+	  HAL_GPIO_WritePin(GPIOK, GPIO_PIN_1, GPIO_PIN_RESET);
+
+	  /*Configure GPIO pin Output Level */
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+
+	  /*Configure GPIO pin Output Level */
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+
+
+
+	  /*Configure GPIO pin : PE6 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_6;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
+	  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PI8 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_8;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
+	  HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PE3 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_3;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
+	  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PH15 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_15;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
+	  HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PB4 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_4;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
+	  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+
+	  /*Configure GPIO pin : PG3 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_3;
+	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PA6 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_6;
+	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PK1 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_1;
+	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	  HAL_GPIO_Init(GPIOK, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PB15 */
+	  GPIO_InitStruct.Pin = GPIO_PIN_15;
+	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+}
 /**
   * @brief  This function is executed in case of error occurrence.
   * @param  None
