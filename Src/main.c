@@ -44,6 +44,7 @@ typedef enum {
 uint16_t x = 0, y = 0;
  uint32_t x_size, y_size;
 TS_Init_t *hTS;
+UART_HandleTypeDef huart3;
 
 const uint32_t aBMPHeader[14]=         
 {0x13A64D42, 0x00000004, 0x00360000, 0x00280000, 0x01A40000, 0x00D40000, 0x00010000, 
@@ -62,6 +63,47 @@ static void CPU_CACHE_Enable(void);
 static void CPU_CACHE_Disable(void);
 static void MPU_Config(void);
 static void GPIO_Init(void);
+static void MX_USART3_UART_Init(void);
+
+int __io_putchar(int ch) {
+  if (HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, HAL_MAX_DELAY) != HAL_OK) {
+    return -1;
+  }
+  return ch;
+}
+
+void HAL_UART_MspInit(UART_HandleTypeDef* huart)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  if(huart->Instance==USART3)
+  {
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3;
+    PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Peripheral clock enable */
+    __HAL_RCC_USART3_CLK_ENABLE();
+
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    /**USART3 GPIO Configuration
+    PB10     ------> USART3_TX
+    PB11     ------> USART3_RX
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  }
+
+}
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -89,7 +131,10 @@ int main(void)
   SystemClock_Config(); 
 
   GPIO_Init();
-    
+  MX_USART3_UART_Init();
+
+ printf("Hi there :)!\r\n");
+
   /* Configure LED1 */
   BSP_LED_Init(LED1);
   
@@ -171,6 +216,37 @@ static void Draw_Menu(void)
 //  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
 //  UTIL_LCD_FillRect(380, (y_size - 40), 30, 30, UTIL_LCD_COLOR_BLACK);
 //  UTIL_LCD_FillCircle(450, (y_size- 24), Radius, UTIL_LCD_COLOR_BLACK);
+}
+
+static void MX_USART3_UART_Init(void)
+{
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 115200;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart3.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetTxFifoThreshold(&huart3, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetRxFifoThreshold(&huart3, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 static void GPIO_Init(void)
