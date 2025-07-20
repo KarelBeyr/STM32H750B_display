@@ -20,7 +20,7 @@
 #include "main.h"
 #include "save.h"
 #include "color.h"
-
+#include <stdbool.h>
 /** @addtogroup STM32H7xx_HAL_Applications
   * @{
   */
@@ -34,6 +34,94 @@ typedef enum {
   APPLICATION_IDLE = 0,  
   APPLICATION_RUNNIG    
 }MSC_ApplicationTypeDef;
+
+
+typedef enum {
+    STATE_F1,
+    STATE_F2,
+    STATE_F3,
+} AppState;
+
+typedef enum { // A bit atypical, but I want to be able to read data from PC connected through UART for better UX
+  KEY_0 = '0',
+  KEY_1 = '1',
+  KEY_2 = '2',
+  KEY_3 = '3',
+  KEY_4 = '4',
+  KEY_5 = '5',
+  KEY_6 = '6',
+  KEY_7 = '7',
+  KEY_8 = '8',
+  KEY_9 = '9',
+  KEY_Enter = 'e',
+  KEY_Clear = 'c',
+  KEY_BkSp = 'b',
+  KEY_Start = 'S',
+  KEY_Stop = 's',
+  KEY_ESC = '`',
+  KEY_F1 = '!',
+  KEY_F2 = '@',
+  KEY_F3 = '#',
+  KEY_F4 = '$',
+  KEY_F5 = '%',
+  KEY_Dot = '.',
+  KEY_Lock = 'l',
+  KEY_OFF = 'f',
+  KEY_ON = 'n'
+} KeyboardButton;
+
+typedef struct {
+	AppState currentState;
+
+	// F1 - screen where user enters voltage and can start/stop PWM
+  uint16_t voltage; // register holding voltage that has been validated and is ready to be sent to PWM
+  uint16_t inputValue; // register holding current value of "input field"
+  bool isVoltageEntered; // flag if we are ready to start PWM. Maybe redundant, we can check against voltage register. But its more robust this way
+  bool isPwmRunning;
+  char message[64]; // ad hoc message to display
+
+    // F2 - screen where user sets three calibration points - TODO later
+    uint16_t calibration_points[3]; // For mapping
+} AppContext;
+
+typedef struct {
+    GPIO_TypeDef* port;
+    uint16_t pin;
+} GPIOPin;
+
+
+#define NUM_ROWS 5
+#define NUM_COLS 5
+
+GPIOPin rowPins[NUM_ROWS] = {
+    { GPIOG, GPIO_PIN_3 }, //D2
+    { GPIOA, GPIO_PIN_6 }, //D3
+    { GPIOK, GPIO_PIN_1 }, //D4
+    { GPIOA, GPIO_PIN_8 }, //D5
+    { GPIOE, GPIO_PIN_6 }
+};
+
+GPIOPin colPins[NUM_COLS] = {
+    { GPIOI, GPIO_PIN_8 },
+    { GPIOE, GPIO_PIN_3 },
+    { GPIOH, GPIO_PIN_15 },
+    { GPIOB, GPIO_PIN_4 },
+	{ GPIOB, GPIO_PIN_15 }
+};
+
+const char keymap[5][5] = {
+    {KEY_ESC,   KEY_6,    KEY_8,     KEY_Lock, KEY_F1},
+    {KEY_3,     KEY_5,    KEY_7,     KEY_F5,   KEY_OFF},
+    {KEY_2,     KEY_4,    KEY_Enter, KEY_F4,   KEY_ON},
+    {KEY_1,     KEY_Clear,KEY_Dot,   KEY_F3,   KEY_Stop},
+    {KEY_BkSp,  KEY_9,    KEY_0,     KEY_F2,   KEY_Start}
+};
+
+volatile int lastRow = -1;
+volatile int lastCol = -1;
+volatile uint32_t lastTriggerTime = 0;
+uint8_t receivedChar;
+
 
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -64,6 +152,7 @@ static void CPU_CACHE_Disable(void);
 static void MPU_Config(void);
 static void GPIO_Init(void);
 static void MX_USART3_UART_Init(void);
+void readFlexiKeyboard();
 
 int __io_putchar(int ch) {
   if (HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, HAL_MAX_DELAY) != HAL_OK) {
@@ -137,38 +226,157 @@ int main(void)
 
   /* Configure LED1 */
   BSP_LED_Init(LED1);
-  
-  /*##-1- LCD Initialization #################################################*/ 
+
+  /*##-1- LCD Initialization #################################################*/
   /* Initialize the LCD */
-  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);  
+  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
   UTIL_LCD_SetFuncDriver(&LCD_Driver);
- 
+
   /* Set Foreground Layer */
   UTIL_LCD_SetLayer(0);
-  
+
   /* Clear the LCD Background layer */
   UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
-  
+
   hTS->Width = x_size;
   hTS->Height = y_size;
   hTS->Orientation =TS_SWAP_XY ;
   hTS->Accuracy = 5;
   /* Touchscreen initialization */
   BSP_TS_Init(0, hTS);
-  
-  
+
+
   /*##-6- Draw the menu ######################################################*/
   //CPU_CACHE_Disable();
-  Draw_Menu();  
+  Draw_Menu();
   CPU_CACHE_Enable();
   /* Infinite loop */  
   while (1)
-  { 
+  {
+
+	  HAL_Delay(100);
+	  readFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
+
+//	  GPIO_PinState l = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
+//	  printf("Level %d\r\n", l);
   }
 }
 
+void setAllRowsInactive(void)
+{
+    for (int i = 0; i < NUM_ROWS; i++) {
+        HAL_GPIO_WritePin(rowPins[i].port, rowPins[i].pin, GPIO_PIN_SET);
+    }
+}
+
+void setRowActive(int row)
+{
+    if (row < 0 || row >= NUM_ROWS)
+        return;
+
+    setAllRowsInactive();
+    HAL_GPIO_WritePin(rowPins[row].port, rowPins[row].pin, GPIO_PIN_RESET);
+}
+
+void readFlexiKeyboard(void)
+{
+    for (int row = 0; row < NUM_ROWS; row++)
+    {
+        setRowActive(row);    // Set current row LOW, others HIGH
+        HAL_Delay(5);         // Small delay for settling
+
+        for (int col = 0; col < NUM_COLS; col++)
+        {
+        	//if (col == 3) break;
+            if (HAL_GPIO_ReadPin(colPins[col].port, colPins[col].pin) == GPIO_PIN_RESET)
+            {
+//                uint32_t now = HAL_GetTick();
+//
+//                // Debounce/repeat suppression
+//                if (lastRow == row && lastCol == col && (now - lastTriggerTime < 300)) {
+//                    return;
+//                }
+//
+//                lastRow = row;
+//                lastCol = col;
+//                lastTriggerTime = now;
+
+                // Key at (row, col) pressed!
+                receivedChar = keymap[row][col];
+                printf("Pressed row %d and col %d hopefully it is %c\r\n", row, col, receivedChar);
+
+
+
+//                AppEvent evt = {
+//                    .type = EVENT_KEY_PRESSED,
+//                    .key = receivedChar
+//                };
+
+                // handle_event(&ctx, &evt); // Uncomment if needed
+                break; // Optionally break to avoid multiple key detections per scan
+            }
+        }
+
+        //setAllRowsInactive();  // Set all rows HIGH before next row scan
+    }
+}
+
+static void GPIO_Init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	 __HAL_RCC_GPIOI_CLK_ENABLE();
+	  __HAL_RCC_GPIOB_CLK_ENABLE();
+	  __HAL_RCC_GPIOK_CLK_ENABLE();
+	  __HAL_RCC_GPIOG_CLK_ENABLE();
+	  __HAL_RCC_GPIOC_CLK_ENABLE();
+	  __HAL_RCC_GPIOE_CLK_ENABLE();
+	  __HAL_RCC_GPIOJ_CLK_ENABLE();
+	  __HAL_RCC_GPIOD_CLK_ENABLE();
+	  __HAL_RCC_GPIOH_CLK_ENABLE();
+	  __HAL_RCC_GPIOA_CLK_ENABLE();
+	  __HAL_RCC_GPIOF_CLK_ENABLE();
+
+
+//	  /*Configure GPIO pin Output Level */
+//	  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_3, GPIO_PIN_RESET);
+//
+//	  /*Configure GPIO pin Output Level */
+//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+//
+//	  /*Configure GPIO pin Output Level */
+//	  HAL_GPIO_WritePin(GPIOK, GPIO_PIN_1, GPIO_PIN_RESET);
+//
+//	  /*Configure GPIO pin Output Level */
+//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+//
+//	  /*Configure GPIO pin Output Level */
+//	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+
+
+	    // --- Configure row pins as OUTPUT ---
+	    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	    GPIO_InitStruct.Pull = GPIO_NOPULL;
+	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+
+	    for (int i = 0; i < NUM_ROWS; i++) {
+	        GPIO_InitStruct.Pin = rowPins[i].pin;
+	        HAL_GPIO_Init(rowPins[i].port, &GPIO_InitStruct);
+
+	        // Set initial output state (HIGH = inactive)
+	        HAL_GPIO_WritePin(rowPins[i].port, rowPins[i].pin, GPIO_PIN_RESET);
+	    }
+
+	    // --- Configure column pins as INPUT with PULL-UP ---
+	    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	    GPIO_InitStruct.Pull = GPIO_PULLUP;
+
+	    for (int i = 0; i < NUM_COLS; i++) {
+	        GPIO_InitStruct.Pin = colPins[i].pin;
+	        HAL_GPIO_Init(colPins[i].port, &GPIO_InitStruct);
+	    }
+}
 
 /**
   * @brief  Draws the menu.
@@ -177,45 +385,15 @@ int main(void)
   */
 static void Draw_Menu(void)
 { 
-  /* Set background Layer */
   UTIL_LCD_SetLayer(0);
   
-  /* Clear the LCD */
   UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
-
-//  /* Draw color image */
-//  UTIL_LCD_DrawBitmap(0, 0, (uint8_t *)color);
-//
-//  /* Draw save image */
-//  UTIL_LCD_DrawBitmap(310, (y_size - 50), (uint8_t *)save);
-//
-//  /* Set Black as text color */
-//  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
-//
-//  /* Draw working window */
-  //UTIL_LCD_DrawRect(61, 0, (x_size - 61), (y_size - 60),UTIL_LCD_COLOR_GREEN);
-//  UTIL_LCD_DrawRect(63, 3, (x_size - 66), (y_size - 66),UTIL_LCD_COLOR_BLACK);
-//  UTIL_LCD_DrawRect(65, 5, (x_size - 70), (y_size - 70),UTIL_LCD_COLOR_BLACK);
-//  UTIL_LCD_DrawRect(67, 7, (x_size - 74), (y_size - 74),UTIL_LCD_COLOR_BLACK);
-//
-//  /* Draw size icons */
-//  UTIL_LCD_FillRect(60, (y_size - 48), 250, 48,UTIL_LCD_COLOR_BLACK);
-//  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
-//  UTIL_LCD_FillCircle(95, (y_size - 24), 20,UTIL_LCD_COLOR_WHITE);
-//  UTIL_LCD_FillCircle(145, (y_size - 24), 15,UTIL_LCD_COLOR_WHITE);
-//  UTIL_LCD_FillCircle(195, (y_size - 24), 10,UTIL_LCD_COLOR_WHITE);
-//  UTIL_LCD_FillCircle(245, (y_size - 24), 5,UTIL_LCD_COLOR_WHITE);
-//  UTIL_LCD_FillCircle(295, (y_size - 24), 2,UTIL_LCD_COLOR_WHITE);
-
   UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
   UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLACK);
   UTIL_LCD_SetFont(&Font32);
   for (int i = 0; i < 8; i++) {
-	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Hello world! Hello world!", LEFT_MODE);
+	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Hello Jaja! Hello zabak", LEFT_MODE);
   }
-//  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
-//  UTIL_LCD_FillRect(380, (y_size - 40), 30, 30, UTIL_LCD_COLOR_BLACK);
-//  UTIL_LCD_FillCircle(450, (y_size- 24), Radius, UTIL_LCD_COLOR_BLACK);
 }
 
 static void MX_USART3_UART_Init(void)
@@ -249,87 +427,6 @@ static void MX_USART3_UART_Init(void)
   }
 }
 
-static void GPIO_Init(void)
-{
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_3, GPIO_PIN_RESET);
-
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
-
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(GPIOK, GPIO_PIN_1, GPIO_PIN_RESET);
-
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
-
-
-
-	  /*Configure GPIO pin : PE6 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_6;
-	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLUP;
-	  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-	  /*Configure GPIO pin : PI8 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_8;
-	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLUP;
-	  HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
-
-	  /*Configure GPIO pin : PE3 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_3;
-	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLUP;
-	  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-	  /*Configure GPIO pin : PH15 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_15;
-	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLUP;
-	  HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-
-	  /*Configure GPIO pin : PB4 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_4;
-	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLUP;
-	  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-
-	  /*Configure GPIO pin : PG3 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_3;
-	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	  GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
-	  /*Configure GPIO pin : PA6 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_6;
-	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	  GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-	  /*Configure GPIO pin : PK1 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_1;
-	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	  GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	  HAL_GPIO_Init(GPIOK, &GPIO_InitStruct);
-
-	  /*Configure GPIO pin : PB15 */
-	  GPIO_InitStruct.Pin = GPIO_PIN_15;
-	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	  GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-}
 /**
   * @brief  This function is executed in case of error occurrence.
   * @param  None
