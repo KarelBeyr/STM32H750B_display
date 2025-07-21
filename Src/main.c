@@ -96,17 +96,17 @@ typedef struct {
 GPIOPin rowPins[NUM_ROWS] = {
     { GPIOG, GPIO_PIN_3 }, //D2
     { GPIOA, GPIO_PIN_6 }, //D3
-    { GPIOK, GPIO_PIN_1 }, //D4
+    { GPIOK, GPIO_PIN_1 }, //D4  // careful, this pin is also used in stm32h750b_discovery_lcd.c for LTDC_G6 (green) pin. We overwrite it and hope for the best.
     { GPIOA, GPIO_PIN_8 }, //D5
-    { GPIOE, GPIO_PIN_6 }
+    { GPIOE, GPIO_PIN_6 }  //D6
 };
 
 GPIOPin colPins[NUM_COLS] = {
-    { GPIOI, GPIO_PIN_8 },
-    { GPIOE, GPIO_PIN_3 },
-    { GPIOH, GPIO_PIN_15 },
-    { GPIOB, GPIO_PIN_4 },
-	{ GPIOB, GPIO_PIN_15 }
+    { GPIOI, GPIO_PIN_8 },  //D7
+    { GPIOE, GPIO_PIN_3 },  //D8
+    { GPIOH, GPIO_PIN_15 }, //D9
+    { GPIOB, GPIO_PIN_4 },  //D10
+	{ GPIOB, GPIO_PIN_15 }  //D11
 };
 
 const char keymap[5][5] = {
@@ -130,21 +130,12 @@ uint8_t receivedChar;
  DMA2D_HandleTypeDef hdma2d_discovery;
 
 uint16_t x = 0, y = 0;
- uint32_t x_size, y_size;
-TS_Init_t *hTS;
+uint32_t x_size, y_size;
 UART_HandleTypeDef huart3;
-
-const uint32_t aBMPHeader[14]=         
-{0x13A64D42, 0x00000004, 0x00360000, 0x00280000, 0x01A40000, 0x00D40000, 0x00010000, 
- 0x00000018, 0xF5400000, 0x00000006, 0x00000000, 0x00000000, 0x00000000, 0x0000};
-
-/* Variable to save the state of USB */
-MSC_ApplicationTypeDef Appli_state = APPLICATION_IDLE;
-
-uint8_t workBuffer[_MAX_SS];
 
 /* Private function prototypes -----------------------------------------------*/
 static void Draw_Menu(void);
+static void InitializeLcd(void);
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void CPU_CACHE_Enable(void);
@@ -161,39 +152,6 @@ int __io_putchar(int ch) {
   return ch;
 }
 
-void HAL_UART_MspInit(UART_HandleTypeDef* huart)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  if(huart->Instance==USART3)
-  {
-  /** Initializes the peripherals clock
-  */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3;
-    PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    /* Peripheral clock enable */
-    __HAL_RCC_USART3_CLK_ENABLE();
-
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**USART3 GPIO Configuration
-    PB10     ------> USART3_TX
-    PB11     ------> USART3_RX
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-  }
-
-}
-
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -205,7 +163,7 @@ int main(void)
 {
   /* Configure the MPU attributes as Write Through for SDRAM*/
   MPU_Config();
-  
+
   /* Enable the CPU Cache */
   CPU_CACHE_Enable();
 
@@ -219,55 +177,34 @@ int main(void)
   /* Configure the system clock to 400 MHz */
   SystemClock_Config(); 
 
-  GPIO_Init();
   MX_USART3_UART_Init();
 
- printf("Hi there :)!\r\n");
+  printf("Hi there :)!\r\n");
 
   /* Configure LED1 */
   BSP_LED_Init(LED1);
 
-  /*##-1- LCD Initialization #################################################*/
-  /* Initialize the LCD */
-  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
-  UTIL_LCD_SetFuncDriver(&LCD_Driver);
 
-  /* Set Foreground Layer */
-  UTIL_LCD_SetLayer(0);
-
-  /* Clear the LCD Background layer */
-  UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
-  BSP_LCD_GetXSize(0, &x_size);
-  BSP_LCD_GetYSize(0, &y_size);
-
-  hTS->Width = x_size;
-  hTS->Height = y_size;
-  hTS->Orientation =TS_SWAP_XY ;
-  hTS->Accuracy = 5;
-  /* Touchscreen initialization */
-  BSP_TS_Init(0, hTS);
-
-
-  /*##-6- Draw the menu ######################################################*/
+  InitializeLcd();
   //CPU_CACHE_Disable();
   Draw_Menu();
+
+  HAL_Delay(1000);
+  GPIO_Init(); // has to be AFTER BSP_LCD_Init, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
+
   CPU_CACHE_Enable();
   /* Infinite loop */  
   while (1)
   {
-
 	  HAL_Delay(100);
 	  readFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
-
-//	  GPIO_PinState l = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
-//	  printf("Level %d\r\n", l);
   }
 }
 
 void setAllRowsInactive(void)
 {
     for (int i = 0; i < NUM_ROWS; i++) {
-        HAL_GPIO_WritePin(rowPins[i].port, rowPins[i].pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(rowPins[i].port, rowPins[i].pin, GPIO_PIN_RESET);
     }
 }
 
@@ -277,7 +214,7 @@ void setRowActive(int row)
         return;
 
     setAllRowsInactive();
-    HAL_GPIO_WritePin(rowPins[row].port, rowPins[row].pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(rowPins[row].port, rowPins[row].pin, GPIO_PIN_SET);
 }
 
 void readFlexiKeyboard(void)
@@ -285,12 +222,13 @@ void readFlexiKeyboard(void)
     for (int row = 0; row < NUM_ROWS; row++)
     {
         setRowActive(row);    // Set current row LOW, others HIGH
-        HAL_Delay(5);         // Small delay for settling
+        HAL_Delay(10);         // Small delay for settling
 
         for (int col = 0; col < NUM_COLS; col++)
         {
-        	//if (col == 3) break;
-            if (HAL_GPIO_ReadPin(colPins[col].port, colPins[col].pin) == GPIO_PIN_RESET)
+
+        	//if (col == 2) break;
+            if (HAL_GPIO_ReadPin(colPins[col].port, colPins[col].pin) == GPIO_PIN_SET)
             {
 //                uint32_t now = HAL_GetTick();
 //
@@ -315,7 +253,7 @@ void readFlexiKeyboard(void)
 //                };
 
                 // handle_event(&ctx, &evt); // Uncomment if needed
-                break; // Optionally break to avoid multiple key detections per scan
+                //break; // Optionally break to avoid multiple key detections per scan
             }
         }
 
@@ -326,56 +264,36 @@ void readFlexiKeyboard(void)
 static void GPIO_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	 __HAL_RCC_GPIOI_CLK_ENABLE();
-	  __HAL_RCC_GPIOB_CLK_ENABLE();
-	  __HAL_RCC_GPIOK_CLK_ENABLE();
-	  __HAL_RCC_GPIOG_CLK_ENABLE();
-	  __HAL_RCC_GPIOC_CLK_ENABLE();
-	  __HAL_RCC_GPIOE_CLK_ENABLE();
-	  __HAL_RCC_GPIOJ_CLK_ENABLE();
-	  __HAL_RCC_GPIOD_CLK_ENABLE();
-	  __HAL_RCC_GPIOH_CLK_ENABLE();
-	  __HAL_RCC_GPIOA_CLK_ENABLE();
-	  __HAL_RCC_GPIOF_CLK_ENABLE();
+
+	//we have to enable this CLK so that we can use output pins
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOE_CLK_ENABLE();
+	__HAL_RCC_GPIOG_CLK_ENABLE();
+	__HAL_RCC_GPIOH_CLK_ENABLE();
+	__HAL_RCC_GPIOI_CLK_ENABLE();
+    __HAL_RCC_GPIOK_CLK_ENABLE();
 
 
-//	  /*Configure GPIO pin Output Level */
-//	  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_3, GPIO_PIN_RESET);
-//
-//	  /*Configure GPIO pin Output Level */
-//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
-//
-//	  /*Configure GPIO pin Output Level */
-//	  HAL_GPIO_WritePin(GPIOK, GPIO_PIN_1, GPIO_PIN_RESET);
-//
-//	  /*Configure GPIO pin Output Level */
-//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-//
-//	  /*Configure GPIO pin Output Level */
-//	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+	// --- Configure row pins as OUTPUT ---
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 
+	for (int i = 0; i < NUM_ROWS; i++) {
+		GPIO_InitStruct.Pin = rowPins[i].pin;
+		HAL_GPIO_Init(rowPins[i].port, &GPIO_InitStruct);
+	}
 
-	    // --- Configure row pins as OUTPUT ---
-	    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	    GPIO_InitStruct.Pull = GPIO_NOPULL;
-	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	// --- Configure column pins as INPUT with PULL-DOWN ---
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
 
-	    for (int i = 0; i < NUM_ROWS; i++) {
-	        GPIO_InitStruct.Pin = rowPins[i].pin;
-	        HAL_GPIO_Init(rowPins[i].port, &GPIO_InitStruct);
-
-	        // Set initial output state (HIGH = inactive)
-	        HAL_GPIO_WritePin(rowPins[i].port, rowPins[i].pin, GPIO_PIN_RESET);
-	    }
-
-	    // --- Configure column pins as INPUT with PULL-UP ---
-	    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	    GPIO_InitStruct.Pull = GPIO_PULLUP;
-
-	    for (int i = 0; i < NUM_COLS; i++) {
-	        GPIO_InitStruct.Pin = colPins[i].pin;
-	        HAL_GPIO_Init(colPins[i].port, &GPIO_InitStruct);
-	    }
+	for (int i = 0; i < NUM_COLS; i++) {
+		GPIO_InitStruct.Pin = colPins[i].pin;
+		HAL_GPIO_Init(colPins[i].port, &GPIO_InitStruct);
+	}
 }
 
 /**
@@ -392,8 +310,23 @@ static void Draw_Menu(void)
   UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLACK);
   UTIL_LCD_SetFont(&Font32);
   for (int i = 0; i < 8; i++) {
-	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Hello Jaja! Hello zabak", LEFT_MODE);
+	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Bumbajs ubumbadadej", LEFT_MODE);
   }
+}
+
+static void InitializeLcd(void)
+{
+  /* Initialize the LCD */
+  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
+  UTIL_LCD_SetFuncDriver(&LCD_Driver);
+
+  /* Set Foreground Layer */
+  UTIL_LCD_SetLayer(0);
+
+  /* Clear the LCD Background layer */
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
+  BSP_LCD_GetXSize(0, &x_size);
+  BSP_LCD_GetYSize(0, &y_size);
 }
 
 static void MX_USART3_UART_Init(void)
@@ -424,6 +357,38 @@ static void MX_USART3_UART_Init(void)
   if (HAL_UARTEx_DisableFifoMode(&huart3) != HAL_OK)
   {
     Error_Handler();
+  }
+}
+
+void HAL_UART_MspInit(UART_HandleTypeDef* huart) // I had to explicitly define this method here, probably I am missing some uart library?
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  if(huart->Instance==USART3)
+  {
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3;
+    PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Peripheral clock enable */
+    __HAL_RCC_USART3_CLK_ENABLE();
+
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    /**USART3 GPIO Configuration
+    PB10     ------> USART3_TX
+    PB11     ------> USART3_RX
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   }
 }
 
