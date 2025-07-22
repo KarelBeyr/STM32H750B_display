@@ -1,1 +1,4 @@
-C:/projects/STM32-H750B-DK/LTDC_Paint/FK/FlexiKeyboard.c:10:6:Hello	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/FK/FlexiKeyboard.c:32:6:setAllRowsInactive	2
+C:/projects/STM32-H750B-DK/LTDC_Paint/FK/FlexiKeyboard.c:39:6:setRowActive	3
+C:/projects/STM32-H750B-DK/LTDC_Paint/FK/FlexiKeyboard.c:48:6:ReadFlexiKeyboard	4
+C:/projects/STM32-H750B-DK/LTDC_Paint/FK/FlexiKeyboard.c:92:6:InitFlexiKeyboard	3

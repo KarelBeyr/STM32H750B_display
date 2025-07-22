@@ -42,34 +42,34 @@ typedef enum {
     STATE_F2,
     STATE_F3,
 } AppState;
-
-typedef enum { // A bit atypical, but I want to be able to read data from PC connected through UART for better UX
-  KEY_0 = '0',
-  KEY_1 = '1',
-  KEY_2 = '2',
-  KEY_3 = '3',
-  KEY_4 = '4',
-  KEY_5 = '5',
-  KEY_6 = '6',
-  KEY_7 = '7',
-  KEY_8 = '8',
-  KEY_9 = '9',
-  KEY_Enter = 'e',
-  KEY_Clear = 'c',
-  KEY_BkSp = 'b',
-  KEY_Start = 'S',
-  KEY_Stop = 's',
-  KEY_ESC = '`',
-  KEY_F1 = '!',
-  KEY_F2 = '@',
-  KEY_F3 = '#',
-  KEY_F4 = '$',
-  KEY_F5 = '%',
-  KEY_Dot = '.',
-  KEY_Lock = 'l',
-  KEY_OFF = 'f',
-  KEY_ON = 'n'
-} KeyboardButton;
+//
+//typedef enum { // A bit atypical, but I want to be able to read data from PC connected through UART for better UX
+//  KEY_0 = '0',
+//  KEY_1 = '1',
+//  KEY_2 = '2',
+//  KEY_3 = '3',
+//  KEY_4 = '4',
+//  KEY_5 = '5',
+//  KEY_6 = '6',
+//  KEY_7 = '7',
+//  KEY_8 = '8',
+//  KEY_9 = '9',
+//  KEY_Enter = 'e',
+//  KEY_Clear = 'c',
+//  KEY_BkSp = 'b',
+//  KEY_Start = 'S',
+//  KEY_Stop = 's',
+//  KEY_ESC = '`',
+//  KEY_F1 = '!',
+//  KEY_F2 = '@',
+//  KEY_F3 = '#',
+//  KEY_F4 = '$',
+//  KEY_F5 = '%',
+//  KEY_Dot = '.',
+//  KEY_Lock = 'l',
+//  KEY_OFF = 'f',
+//  KEY_ON = 'n'
+//} KeyboardButton;
 
 typedef struct {
 	AppState currentState;
@@ -84,44 +84,44 @@ typedef struct {
     // F2 - screen where user sets three calibration points - TODO later
     uint16_t calibration_points[3]; // For mapping
 } AppContext;
-
-typedef struct {
-    GPIO_TypeDef* port;
-    uint16_t pin;
-} GPIOPin;
-
-
-#define NUM_ROWS 5
-#define NUM_COLS 5
-
-GPIOPin rowPins[NUM_ROWS] = {
-    { GPIOG, GPIO_PIN_3 }, //D2
-    { GPIOA, GPIO_PIN_6 }, //D3
-    { GPIOK, GPIO_PIN_1 }, //D4  // careful, this pin is also used in stm32h750b_discovery_lcd.c for LTDC_G6 (green) pin. We overwrite it and hope for the best.
-    { GPIOA, GPIO_PIN_8 }, //D5
-    { GPIOE, GPIO_PIN_6 }  //D6
-};
-
-GPIOPin colPins[NUM_COLS] = {
-    { GPIOI, GPIO_PIN_8 },  //D7
-    { GPIOE, GPIO_PIN_3 },  //D8
-    { GPIOH, GPIO_PIN_15 }, //D9
-    { GPIOB, GPIO_PIN_4 },  //D10
-	{ GPIOB, GPIO_PIN_15 }  //D11
-};
-
-const char keymap[5][5] = {
-    {KEY_ESC,   KEY_6,    KEY_8,     KEY_Lock, KEY_F1},
-    {KEY_3,     KEY_5,    KEY_7,     KEY_F5,   KEY_OFF},
-    {KEY_2,     KEY_4,    KEY_Enter, KEY_F4,   KEY_ON},
-    {KEY_1,     KEY_Clear,KEY_Dot,   KEY_F3,   KEY_Stop},
-    {KEY_BkSp,  KEY_9,    KEY_0,     KEY_F2,   KEY_Start}
-};
-
-volatile int lastRow = -1;
-volatile int lastCol = -1;
-volatile uint32_t lastTriggerTime = 0;
-uint8_t receivedChar;
+//
+//typedef struct {
+//    GPIO_TypeDef* port;
+//    uint16_t pin;
+//} GPIOPin;
+//
+//
+//#define NUM_ROWS 5
+//#define NUM_COLS 5
+//
+//GPIOPin rowPins[NUM_ROWS] = {
+//    { GPIOG, GPIO_PIN_3 }, //D2
+//    { GPIOA, GPIO_PIN_6 }, //D3
+//    { GPIOK, GPIO_PIN_1 }, //D4  // careful, this pin is also used in stm32h750b_discovery_lcd.c for LTDC_G6 (green) pin. We overwrite it and hope for the best.
+//    { GPIOA, GPIO_PIN_8 }, //D5
+//    { GPIOE, GPIO_PIN_6 }  //D6
+//};
+//
+//GPIOPin colPins[NUM_COLS] = {
+//    { GPIOI, GPIO_PIN_8 },  //D7
+//    { GPIOE, GPIO_PIN_3 },  //D8
+//    { GPIOH, GPIO_PIN_15 }, //D9
+//    { GPIOB, GPIO_PIN_4 },  //D10
+//	{ GPIOB, GPIO_PIN_15 }  //D11
+//};
+//
+//const char keymap[5][5] = {
+//    {KEY_ESC,   KEY_6,    KEY_8,     KEY_Lock, KEY_F1},
+//    {KEY_3,     KEY_5,    KEY_7,     KEY_F5,   KEY_OFF},
+//    {KEY_2,     KEY_4,    KEY_Enter, KEY_F4,   KEY_ON},
+//    {KEY_1,     KEY_Clear,KEY_Dot,   KEY_F3,   KEY_Stop},
+//    {KEY_BkSp,  KEY_9,    KEY_0,     KEY_F2,   KEY_Start}
+//};
+//
+//volatile int lastRow = -1;
+//volatile int lastCol = -1;
+//volatile uint32_t lastTriggerTime = 0;
+//uint8_t receivedChar;
 
 
 /* Private define ------------------------------------------------------------*/
@@ -142,9 +142,9 @@ static void Error_Handler(void);
 static void CPU_CACHE_Enable(void);
 static void CPU_CACHE_Disable(void);
 static void MPU_Config(void);
-static void GPIO_Init(void);
+//static void GPIO_Init(void);
 static void MX_USART3_UART_Init(void);
-void readFlexiKeyboard();
+//void readFlexiKeyboard();
 
 int __io_putchar(int ch) {
   if (HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, HAL_MAX_DELAY) != HAL_OK) {
@@ -162,7 +162,6 @@ int __io_putchar(int ch) {
   */
 int main(void)
 {
-	Hello();
   /* Configure the MPU attributes as Write Through for SDRAM*/
   MPU_Config();
 
@@ -192,111 +191,111 @@ int main(void)
   Draw_Menu();
 
   HAL_Delay(1000);
-  GPIO_Init(); // has to be AFTER BSP_LCD_Init, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
+  InitFlexiKeyboard(); // has to be AFTER BSP_LCD_Init, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
 
   CPU_CACHE_Enable();
   /* Infinite loop */  
   while (1)
   {
 	  HAL_Delay(100);
-	  readFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
+	  ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
   }
 }
-
-void setAllRowsInactive(void)
-{
-    for (int i = 0; i < NUM_ROWS; i++) {
-        HAL_GPIO_WritePin(rowPins[i].port, rowPins[i].pin, GPIO_PIN_RESET);
-    }
-}
-
-void setRowActive(int row)
-{
-    if (row < 0 || row >= NUM_ROWS)
-        return;
-
-    setAllRowsInactive();
-    HAL_GPIO_WritePin(rowPins[row].port, rowPins[row].pin, GPIO_PIN_SET);
-}
-
-void readFlexiKeyboard(void)
-{
-    for (int row = 0; row < NUM_ROWS; row++)
-    {
-        setRowActive(row);    // Set current row LOW, others HIGH
-        HAL_Delay(10);         // Small delay for settling
-
-        for (int col = 0; col < NUM_COLS; col++)
-        {
-
-        	//if (col == 2) break;
-            if (HAL_GPIO_ReadPin(colPins[col].port, colPins[col].pin) == GPIO_PIN_SET)
-            {
-//                uint32_t now = HAL_GetTick();
 //
-//                // Debounce/repeat suppression
-//                if (lastRow == row && lastCol == col && (now - lastTriggerTime < 300)) {
-//                    return;
-//                }
+//void setAllRowsInactive(void)
+//{
+//    for (int i = 0; i < NUM_ROWS; i++) {
+//        HAL_GPIO_WritePin(rowPins[i].port, rowPins[i].pin, GPIO_PIN_RESET);
+//    }
+//}
 //
-//                lastRow = row;
-//                lastCol = col;
-//                lastTriggerTime = now;
-
-                // Key at (row, col) pressed!
-                receivedChar = keymap[row][col];
-                printf("Pressed row %d and col %d hopefully it is %c\r\n", row, col, receivedChar);
-
-
-
-//                AppEvent evt = {
-//                    .type = EVENT_KEY_PRESSED,
-//                    .key = receivedChar
-//                };
-
-                // handle_event(&ctx, &evt); // Uncomment if needed
-                //break; // Optionally break to avoid multiple key detections per scan
-            }
-        }
-
-        //setAllRowsInactive();  // Set all rows HIGH before next row scan
-    }
-}
-
-static void GPIO_Init(void)
-{
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-	//we have to enable this CLK so that we can use output pins
-	__HAL_RCC_GPIOA_CLK_ENABLE();
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	__HAL_RCC_GPIOD_CLK_ENABLE();
-	__HAL_RCC_GPIOE_CLK_ENABLE();
-	__HAL_RCC_GPIOG_CLK_ENABLE();
-	__HAL_RCC_GPIOH_CLK_ENABLE();
-	__HAL_RCC_GPIOI_CLK_ENABLE();
-    __HAL_RCC_GPIOK_CLK_ENABLE();
-
-
-	// --- Configure row pins as OUTPUT ---
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-
-	for (int i = 0; i < NUM_ROWS; i++) {
-		GPIO_InitStruct.Pin = rowPins[i].pin;
-		HAL_GPIO_Init(rowPins[i].port, &GPIO_InitStruct);
-	}
-
-	// --- Configure column pins as INPUT with PULL-DOWN ---
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-
-	for (int i = 0; i < NUM_COLS; i++) {
-		GPIO_InitStruct.Pin = colPins[i].pin;
-		HAL_GPIO_Init(colPins[i].port, &GPIO_InitStruct);
-	}
-}
+//void setRowActive(int row)
+//{
+//    if (row < 0 || row >= NUM_ROWS)
+//        return;
+//
+//    setAllRowsInactive();
+//    HAL_GPIO_WritePin(rowPins[row].port, rowPins[row].pin, GPIO_PIN_SET);
+//}
+//
+//void readFlexiKeyboard(void)
+//{
+//    for (int row = 0; row < NUM_ROWS; row++)
+//    {
+//        setRowActive(row);    // Set current row LOW, others HIGH
+//        HAL_Delay(10);         // Small delay for settling
+//
+//        for (int col = 0; col < NUM_COLS; col++)
+//        {
+//
+//        	//if (col == 2) break;
+//            if (HAL_GPIO_ReadPin(colPins[col].port, colPins[col].pin) == GPIO_PIN_SET)
+//            {
+////                uint32_t now = HAL_GetTick();
+////
+////                // Debounce/repeat suppression
+////                if (lastRow == row && lastCol == col && (now - lastTriggerTime < 300)) {
+////                    return;
+////                }
+////
+////                lastRow = row;
+////                lastCol = col;
+////                lastTriggerTime = now;
+//
+//                // Key at (row, col) pressed!
+//                receivedChar = keymap[row][col];
+//                printf("Pressed row %d and col %d hopefully it is %c\r\n", row, col, receivedChar);
+//
+//
+//
+////                AppEvent evt = {
+////                    .type = EVENT_KEY_PRESSED,
+////                    .key = receivedChar
+////                };
+//
+//                // handle_event(&ctx, &evt); // Uncomment if needed
+//                //break; // Optionally break to avoid multiple key detections per scan
+//            }
+//        }
+//
+//        //setAllRowsInactive();  // Set all rows HIGH before next row scan
+//    }
+//}
+//
+//static void GPIO_Init(void)
+//{
+//	GPIO_InitTypeDef GPIO_InitStruct = {0};
+//
+//	//we have to enable this CLK so that we can use output pins
+//	__HAL_RCC_GPIOA_CLK_ENABLE();
+//	__HAL_RCC_GPIOB_CLK_ENABLE();
+//	__HAL_RCC_GPIOD_CLK_ENABLE();
+//	__HAL_RCC_GPIOE_CLK_ENABLE();
+//	__HAL_RCC_GPIOG_CLK_ENABLE();
+//	__HAL_RCC_GPIOH_CLK_ENABLE();
+//	__HAL_RCC_GPIOI_CLK_ENABLE();
+//    __HAL_RCC_GPIOK_CLK_ENABLE();
+//
+//
+//	// --- Configure row pins as OUTPUT ---
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//
+//	for (int i = 0; i < NUM_ROWS; i++) {
+//		GPIO_InitStruct.Pin = rowPins[i].pin;
+//		HAL_GPIO_Init(rowPins[i].port, &GPIO_InitStruct);
+//	}
+//
+//	// --- Configure column pins as INPUT with PULL-DOWN ---
+//	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+//	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+//
+//	for (int i = 0; i < NUM_COLS; i++) {
+//		GPIO_InitStruct.Pin = colPins[i].pin;
+//		HAL_GPIO_Init(colPins[i].port, &GPIO_InitStruct);
+//	}
+//}
 
 /**
   * @brief  Draws the menu.
@@ -312,7 +311,7 @@ static void Draw_Menu(void)
   UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLACK);
   UTIL_LCD_SetFont(&Font32);
   for (int i = 0; i < 8; i++) {
-	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Bumbajs ubumbadadej", LEFT_MODE);
+	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Bumbajs ubumbananej", LEFT_MODE);
   }
 }
 
