@@ -14,12 +14,14 @@ RM := rm -rf
 -include Middlewares/STM32_USBH_Library/Class/MSC/subdir.mk
 -include Middlewares/FatFs/Options/subdir.mk
 -include Middlewares/FatFs/Core/subdir.mk
+-include FK/subdir.mk
 -include Drivers/STM32H7xx_HAL_Driver/subdir.mk
 -include Drivers/CMSIS/subdir.mk
 -include Drivers/BSP/STM32H750B-Discovery/subdir.mk
 -include Drivers/BSP/Components/subdir.mk
 -include Application/User/subdir.mk
 -include Application/Startup/subdir.mk
+-include subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
