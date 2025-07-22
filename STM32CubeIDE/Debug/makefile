@@ -19,9 +19,9 @@ RM := rm -rf
 -include Drivers/CMSIS/subdir.mk
 -include Drivers/BSP/STM32H750B-Discovery/subdir.mk
 -include Drivers/BSP/Components/subdir.mk
+-include Display/subdir.mk
 -include Application/User/subdir.mk
 -include Application/Startup/subdir.mk
--include subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

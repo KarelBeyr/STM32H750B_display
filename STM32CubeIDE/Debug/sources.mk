@@ -24,12 +24,12 @@ C_DEPS :=
 SUBDIRS := \
 Application/Startup \
 Application/User \
+Display \
 Drivers/BSP/Components \
 Drivers/BSP/STM32H750B-Discovery \
 Drivers/CMSIS \
 Drivers/STM32H7xx_HAL_Driver \
 FK \
-. \
 Middlewares/FatFs/Core \
 Middlewares/FatFs/Options \
 Middlewares/STM32_USBH_Library/Class/MSC \

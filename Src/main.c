@@ -21,6 +21,7 @@
 #include "save.h"
 #include "color.h"
 #include "FlexiKeyboard.h"
+#include "display.h"
 #include <stdbool.h>
 /** @addtogroup STM32H7xx_HAL_Applications
   * @{
@@ -162,6 +163,7 @@ int __io_putchar(int ch) {
   */
 int main(void)
 {
+	B();
   /* Configure the MPU attributes as Write Through for SDRAM*/
   MPU_Config();
 

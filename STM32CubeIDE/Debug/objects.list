@@ -5,6 +5,7 @@
 "./Application/User/sysmem.o"
 "./Application/User/usbh_conf.o"
 "./Application/User/usbh_diskio.o"
+"./Display/display.o"
 "./Drivers/BSP/Components/ft5336.o"
 "./Drivers/BSP/Components/ft5336_reg.o"
 "./Drivers/BSP/Components/mt48lc4m32b2.o"
