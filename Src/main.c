@@ -72,57 +72,30 @@ int main(void)
 {
   /* Configure the MPU attributes as Write Through for SDRAM*/
   MPU_Config();
-
-  /* Enable the CPU Cache */
   CPU_CACHE_Enable();
-
-  /* STM32H7xx HAL library initialization:
-       - Configure the Systick to generate an interrupt each 1 msec
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
   HAL_Init();
-  
-  /* Configure the system clock to 400 MHz */
-  SystemClock_Config(); 
-
+  SystemClock_Config();
   MX_USART3_UART_Init();
-
-  printf("Hi there :)!\r\n");
-
-  /* Configure LED1 */
-  BSP_LED_Init(LED1);
+  
+  printf("Starting...\r\n");
 
   AppContext ctx;
   InitializeAppContext(&ctx);
 
   InitializeLcd();
-  //CPU_CACHE_Disable();
-  Draw_Menu();
   UartClearScreen();
 
-  HAL_Delay(1000);
-  InitFlexiKeyboard(); // has to be AFTER BSP_LCD_Init, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
+  InitFlexiKeyboard(); // has to be AFTER InitializeLcd, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
 
-  CPU_CACHE_Enable();
-  /* Infinite loop */  
   while (1)
   {
 	  KeyboardButton key = ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
-	  if (key == KEY_NULL) continue;
+	  //if (key == KEY_NULL) continue;
 	  handle_event(&ctx, key);
 	  UartRenderState(&ctx);
-	  //CPU_CACHE_Disable();
 	  DisplayRenderState(&ctx);
-	  CPU_CACHE_Enable();
   }
 }
-
-/**
-  * @brief  Draws the menu.
-  * @param  None
-  * @retval None
-  */
 
 static void MX_USART3_UART_Init(void)
 {

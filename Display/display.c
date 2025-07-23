@@ -2,17 +2,10 @@
 
 uint32_t x_size, y_size;
 
-void Draw_Menu(void)
+void ClearCache()
 {
-  UTIL_LCD_SetLayer(0);
-
-  UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
-  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLACK);
-  UTIL_LCD_SetFont(&Font32);
-  for (int i = 0; i < 8; i++) {
-	  UTIL_LCD_DisplayStringAt(0, i * 32, (uint8_t *)"Bumbajs ubumbananej3", LEFT_MODE);
-  }
+	// otherwise I get LCD artefacts
+	SCB_CleanDCache_by_Addr(SDRAM_DEVICE_ADDR, 480*272*4);
 }
 
 void InitializeLcd(void)
@@ -28,6 +21,10 @@ void InitializeLcd(void)
   UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
+
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLACK);
+  UTIL_LCD_SetFont(&Font32);
 }
 
 void uartSetCursorPosition(int row, int col) {
@@ -90,6 +87,9 @@ void DisplayRenderState(AppContext *ctx)
     UTIL_LCD_DisplayStringAt(0, 96, (uint8_t *)buffer, LEFT_MODE);
 
     UTIL_LCD_DisplayStringAt(0, 128, (uint8_t *)ctx->message, LEFT_MODE);
+
+    ClearCache();
+
 
 //    uartSetCursorPosition(5, 1);
 //    printf("%s                                                               \r\n", ctx->message);
