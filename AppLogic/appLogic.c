@@ -27,6 +27,10 @@ void startPWM(AppContext *ctx) {
   // TODO callbakc
 }
 
+void setSTATE_F3(AppContext *ctx) {
+  ctx->currentState = STATE_F3;
+}
+
 void setSTATE_F2(AppContext *ctx) {
   ctx->currentState = STATE_F2;
 }
@@ -38,24 +42,22 @@ void setSTATE_F1(AppContext *ctx) {
 void validateAndSetVoltage(AppContext *ctx) {
   if (ctx->inputValue < 80 || ctx->inputValue > 400)
   {
-    strcpy(ctx->message, "Input voltage has to be in range 80 - 400. Resetting, try again!");
+    strcpy(ctx->message, "Not in range 80 - 400!");
     clearInput(ctx);
     return;
   }
   ctx->isVoltageEntered = true;
   ctx->voltage = ctx->inputValue;
   ctx->inputValue = 0;
-  sprintf(ctx->message, "Voltage %d has been successfully entered", ctx->voltage);
-
 }
 
 void updateInput(AppContext *ctx, KeyboardButton key) {
   uint8_t digit = key - '0';
-  ctx->inputValue = ctx->inputValue * 10 + digit;
-  if (ctx->inputValue > 400) {
-    strcpy(ctx->message, "Input set too high, resetting. Try again");
-    clearInput(ctx);
+  if (ctx->inputValue > 40) {
+    strcpy(ctx->message, "Input too high!");
+    return;
   }
+  ctx->inputValue = ctx->inputValue * 10 + digit;
 }
 
 bool handle_event(AppContext *ctx, KeyboardButton key)
@@ -84,20 +86,29 @@ bool handle_event(AppContext *ctx, KeyboardButton key)
 	if (ctx->isVoltageEntered == true) // valid voltage has been entered
 	{
 	  if (key == KEY_Start) startPWM(ctx);
+      if (key == KEY_Clear) clearVoltage(ctx);
+	} else
+	{
+	  if (key >= KEY_0 && key <= KEY_9) updateInput(ctx, key);
+	  if (key == KEY_Enter) validateAndSetVoltage(ctx);
+	  if (key == KEY_BkSp) backspace(ctx);
+	  if (key == KEY_ESC) clearInput(ctx);
 	}
 
-	if (key >= KEY_0 && key <= KEY_9) updateInput(ctx, key);
-	if (key == KEY_Clear) clearVoltage(ctx);
-	if (key == KEY_Enter) validateAndSetVoltage(ctx);
-	if (key == KEY_BkSp) backspace(ctx);
-	if (key == KEY_F2) setSTATE_F2(ctx);
-	if (key == KEY_ESC) clearInput(ctx);
+    if (key == KEY_F2) setSTATE_F2(ctx);
+    if (key == KEY_F3) setSTATE_F3(ctx);
   }
 
   if (ctx->currentState == STATE_F2) {
 	if (key == KEY_F1) setSTATE_F1(ctx);
+	if (key == KEY_F3) setSTATE_F3(ctx);
   }
-  return true;
+
+  if (ctx->currentState == STATE_F3) {
+	if (key == KEY_F1) setSTATE_F1(ctx);
+	if (key == KEY_F2) setSTATE_F2(ctx);
+  }
+return true;
 }
 
 void InitializeAppContext(AppContext* ctx) {

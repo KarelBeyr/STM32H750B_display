@@ -1,6 +1,7 @@
 #include "display.h"
 
 uint32_t x_size, y_size;
+#define LCD_LINE_WIDTH 24
 
 void ClearCache()
 {
@@ -59,53 +60,70 @@ void UartRenderState(AppContext *ctx) {
   }
 }
 
+void displayPaddedLine(uint16_t y, const char *text)
+{
+	// the sole purpose of this helper method is to overwrite the whole row so that we do not need to rely on clear screen
+
+    char padded[LCD_LINE_WIDTH];
+    memset(padded, ' ', LCD_LINE_WIDTH);
+
+    // Copy up to 24 characters from text
+    size_t len = strlen(text);
+    if (len > LCD_LINE_WIDTH) len = LCD_LINE_WIDTH;
+    memcpy(padded, text, len);
+
+    // Display the padded string
+    UTIL_LCD_DisplayStringAt(0, y*32, (uint8_t *)padded, LEFT_MODE);
+}
+
 void DisplayRenderState(AppContext *ctx)
 {
- // UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
+  char buffer[LCD_LINE_WIDTH+1];
 
   if (ctx->currentState == STATE_F1) {
-	char buffer[32];  // Make sure it's large enough
-    UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"F1: Voltage control", LEFT_MODE);
-
-    char cursor = ' ';
-    if (ctx->displayCursor) cursor = '_';
-    sprintf(buffer, "Current input: %d%c  ", ctx->inputValue, cursor);
-    UTIL_LCD_DisplayStringAt(0, 32, (uint8_t *)buffer, LEFT_MODE);
-
-    if (ctx->voltage > 0) {
-      sprintf(buffer, "Voltage: %dV  ", ctx->voltage);
-    } else {
-      strcpy(buffer, "Voltage: N/A  ");
-    }
-    UTIL_LCD_DisplayStringAt(0, 64, (uint8_t *)buffer, LEFT_MODE);
-
+	displayPaddedLine(0, "F1: Voltage control");
     if (ctx->isPwmRunning == true) {
-      sprintf(buffer, "PWM is running at %dV ", ctx->voltage);
-    } else {
-      strcpy(buffer, "PWM is OFF              ");
+      sprintf(buffer, "PWM is running at %dV", ctx->voltage);
+      displayPaddedLine(2, buffer);
+      displayPaddedLine(3, "Press STOP");
     }
-    UTIL_LCD_DisplayStringAt(0, 96, (uint8_t *)buffer, LEFT_MODE);
+    else if (ctx->isVoltageEntered)
+    {
+	  sprintf(buffer, "Voltage: %dV", ctx->voltage);
+      displayPaddedLine(2, buffer);
+      displayPaddedLine(3, "Press START or Clear");
+    }
+    else
+    {
+	  char cursor = ' ';
+	  if (ctx->displayCursor) cursor = '_';
+	  if (ctx->inputValue != 0)
+		  sprintf(buffer, "Enter voltage: %d%c", ctx->inputValue, cursor);
+	  else
+		  sprintf(buffer, "Enter voltage: %c", cursor);
 
-
-
-    char padded[25];  // 24 characters + null terminator
-
-    // Step 1: Fill buffer with spaces
-    memset(padded, ' ', 24);
-    //padded[24] = '\0';
-
-    // Step 2: Copy message into the start of padded buffer
-    size_t len = strlen(ctx->message);
-    if (len > 24) len = 24;  // truncate if too long
-    memcpy(padded, ctx->message, len);
-
-
-    UTIL_LCD_DisplayStringAt(0, 128, (uint8_t *)padded, LEFT_MODE);
-
-    ClearCache();
-
-
-//    uartSetCursorPosition(5, 1);
-//    printf("%s                                                               \r\n", ctx->message);
+      displayPaddedLine(2, buffer);
+      displayPaddedLine(3, "Press Enter");
+    }
   }
+  else if (ctx->currentState == STATE_F2)
+  {
+    displayPaddedLine(0, "F2: Voltage and current");
+    displayPaddedLine(1, "");
+    displayPaddedLine(2, "");
+    displayPaddedLine(3, "");
+  }
+  else if (ctx->currentState == STATE_F3)
+  {
+	displayPaddedLine(0, "F3: Calibration");
+    displayPaddedLine(1, "");
+    displayPaddedLine(2, "");
+    displayPaddedLine(3, "");
+  }
+
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+  displayPaddedLine(4, ctx->message);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+
+  ClearCache();
 }
