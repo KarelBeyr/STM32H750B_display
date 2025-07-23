@@ -32,6 +32,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>AppLogic</name>
+			<type>2</type>
+			<location>C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic</location>
+		</link>
+		<link>
 			<name>Display</name>
 			<type>2</type>
 			<location>C:/projects/STM32-H750B-DK/LTDC_Paint/Display</location>

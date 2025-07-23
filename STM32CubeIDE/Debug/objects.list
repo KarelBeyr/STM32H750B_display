@@ -1,3 +1,4 @@
+"./AppLogic/appLogic.o"
 "./Application/Startup/startup_stm32h750xbhx.o"
 "./Application/User/main.o"
 "./Application/User/stm32h7xx_it.o"

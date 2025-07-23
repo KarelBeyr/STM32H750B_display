@@ -22,6 +22,7 @@ RM := rm -rf
 -include Display/subdir.mk
 -include Application/User/subdir.mk
 -include Application/Startup/subdir.mk
+-include AppLogic/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

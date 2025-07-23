@@ -61,6 +61,7 @@
 									<listOptionValue builtIn="false" value="../../Utilities/Lcd_Trace"/>
 									<listOptionValue builtIn="false" value="&quot;../..\FK\&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../..\Display\&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../..\AppLogic\&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.119992274" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -188,6 +189,13 @@
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/LTDC_Paint"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/LTDC_Paint"/>
+		</configuration>
+	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
