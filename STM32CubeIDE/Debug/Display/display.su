@@ -1,1 +1,2 @@
-C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:3:6:B	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:5:6:Draw_Menu	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:18:6:InitializeLcd	8	static
