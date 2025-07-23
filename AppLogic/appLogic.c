@@ -57,15 +57,16 @@ void updateInput(AppContext *ctx, KeyboardButton key) {
   }
 }
 
-void handle_event(AppContext *ctx, KeyboardButton key)
+bool handle_event(AppContext *ctx, KeyboardButton key)
 {
+  if (key == KEY_NULL) return false;;
   strcpy(ctx->message, "");
 
   if (ctx->currentState == STATE_F1) {
 	if (ctx->isPwmRunning == true)
 	{
 	  if (key == KEY_Stop) stopPWM(ctx);
-	  return; // when PWM is running, we can only press the "STOP" button
+	  return false; // when PWM is running, we can only press the "STOP" button
 	}
 
 	if (ctx->isVoltageEntered == true) // valid voltage has been entered
@@ -83,8 +84,8 @@ void handle_event(AppContext *ctx, KeyboardButton key)
 
   if (ctx->currentState == STATE_F2) {
 	if (key == KEY_F1) setSTATE_F1(ctx);
-	return;
   }
+  return true;
 }
 
 void InitializeAppContext(AppContext* ctx) {

@@ -90,8 +90,8 @@ int main(void)
   while (1)
   {
 	  KeyboardButton key = ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
-	  //if (key == KEY_NULL) continue;
-	  handle_event(&ctx, key);
+	  bool ctxChanged = handle_event(&ctx, key);
+	  if (!ctxChanged) continue;
 	  UartRenderState(&ctx);
 	  DisplayRenderState(&ctx);
   }
