@@ -59,6 +59,7 @@ typedef struct {
   uint16_t inputValue; // register holding current value of "input field"
   bool isVoltageEntered; // flag if we are ready to start PWM. Maybe redundant, we can check against voltage register. But its more robust this way
   bool isPwmRunning;
+  bool displayCursor;
   char message[64]; // ad hoc message to display
 
     // F2 - screen where user sets three calibration points - TODO later

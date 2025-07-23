@@ -1,5 +1,6 @@
 #include "appLogic.h"
 
+uint32_t lastCursorTime = 0;
 
 void clearInput(AppContext *ctx) {
   ctx->inputValue = 0;
@@ -59,7 +60,18 @@ void updateInput(AppContext *ctx, KeyboardButton key) {
 
 bool handle_event(AppContext *ctx, KeyboardButton key)
 {
-  if (key == KEY_NULL) return false;;
+  if (key == KEY_NULL)
+  {
+	  // cursor logic
+	  uint32_t now = HAL_GetTick();
+	  if (now - lastCursorTime > 500)
+	  {
+		  ctx->displayCursor = !ctx->displayCursor;
+		  lastCursorTime = now;
+		  return true;
+	  }
+	  return false;
+  }
   strcpy(ctx->message, "");
 
   if (ctx->currentState == STATE_F1) {

@@ -3,4 +3,4 @@ C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:11:6:InitializeLcd	8	sta
 C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:30:6:uartSetCursorPosition	16	static
 C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:34:6:UartClearScreen	8	static
 C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:39:6:UartRenderState	16	static
-C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:62:6:DisplayRenderState	56	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/Display/display.c:62:6:DisplayRenderState	96	static

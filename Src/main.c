@@ -50,7 +50,6 @@ UART_HandleTypeDef huart3;
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void CPU_CACHE_Enable(void);
-static void CPU_CACHE_Disable(void);
 static void MPU_Config(void);
 static void MX_USART3_UART_Init(void);
 
@@ -89,6 +88,7 @@ int main(void)
 
   while (1)
   {
+	  HAL_Delay(200);
 	  KeyboardButton key = ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
 	  bool ctxChanged = handle_event(&ctx, key);
 	  if (!ctxChanged) continue;
@@ -269,6 +269,7 @@ static void SystemClock_Config(void)
   /* Enables the I/O Compensation Cell */
   HAL_EnableCompensationCell();
 }
+
 /**
   * @brief  CPU L1-Cache enable.
   * @param  None
@@ -281,15 +282,6 @@ static void CPU_CACHE_Enable(void)
 
   /* Enable D-Cache */
   SCB_EnableDCache();
-}
-
-static void CPU_CACHE_Disable(void)
-{
-  /* Enable I-Cache */
-  SCB_DisableICache();
-
-  /* Enable D-Cache */
-  SCB_DisableDCache();
 }
 
 /**
@@ -375,12 +367,3 @@ void assert_failed(uint8_t* file, uint32_t line)
   }
 }
 #endif
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-

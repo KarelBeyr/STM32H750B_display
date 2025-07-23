@@ -5,7 +5,7 @@ uint32_t x_size, y_size;
 void ClearCache()
 {
 	// otherwise I get LCD artefacts
-	SCB_CleanDCache_by_Addr(SDRAM_DEVICE_ADDR, 480*272*4);
+	SCB_CleanDCache_by_Addr((void *)SDRAM_DEVICE_ADDR, 480*272*4);
 }
 
 void InitializeLcd(void)
@@ -61,32 +61,46 @@ void UartRenderState(AppContext *ctx) {
 
 void DisplayRenderState(AppContext *ctx)
 {
-  UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
+ // UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
 
   if (ctx->currentState == STATE_F1) {
 	char buffer[32];  // Make sure it's large enough
-    UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"F1: Voltage control    ", LEFT_MODE);
-    sprintf(buffer, "Current input: %d", ctx->inputValue);
-    UTIL_LCD_DisplayStringAt(0, 32, (uint8_t *)buffer, LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"F1: Voltage control", LEFT_MODE);
 
-    sprintf(buffer, "Current input: %d", ctx->inputValue);
+    char cursor = ' ';
+    if (ctx->displayCursor) cursor = '_';
+    sprintf(buffer, "Current input: %d%c  ", ctx->inputValue, cursor);
     UTIL_LCD_DisplayStringAt(0, 32, (uint8_t *)buffer, LEFT_MODE);
 
     if (ctx->voltage > 0) {
-      sprintf(buffer, "Voltage: %dV", ctx->voltage);
+      sprintf(buffer, "Voltage: %dV  ", ctx->voltage);
     } else {
-      strcpy(buffer, "Voltage: N/A");
+      strcpy(buffer, "Voltage: N/A  ");
     }
     UTIL_LCD_DisplayStringAt(0, 64, (uint8_t *)buffer, LEFT_MODE);
 
     if (ctx->isPwmRunning == true) {
-      sprintf(buffer, "PWM is running at %dV", ctx->voltage);
+      sprintf(buffer, "PWM is running at %dV ", ctx->voltage);
     } else {
-      strcpy(buffer, "PWM is OFF");
+      strcpy(buffer, "PWM is OFF              ");
     }
     UTIL_LCD_DisplayStringAt(0, 96, (uint8_t *)buffer, LEFT_MODE);
 
-    UTIL_LCD_DisplayStringAt(0, 128, (uint8_t *)ctx->message, LEFT_MODE);
+
+
+    char padded[25];  // 24 characters + null terminator
+
+    // Step 1: Fill buffer with spaces
+    memset(padded, ' ', 24);
+    //padded[24] = '\0';
+
+    // Step 2: Copy message into the start of padded buffer
+    size_t len = strlen(ctx->message);
+    if (len > 24) len = 24;  // truncate if too long
+    memcpy(padded, ctx->message, len);
+
+
+    UTIL_LCD_DisplayStringAt(0, 128, (uint8_t *)padded, LEFT_MODE);
 
     ClearCache();
 
