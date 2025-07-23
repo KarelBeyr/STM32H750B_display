@@ -326,7 +326,6 @@ Discarded input sections
  .bss           0x00000000        0x0 ./Application/User/main.o
  .rodata.save   0x00000000     0x13be ./Application/User/main.o
  .rodata.color  0x00000000     0x6a76 ./Application/User/main.o
- .text.AA       0x00000000       0x16 ./Application/User/main.o
  .bss.hdma2d_discovery
                 0x00000000       0x68 ./Application/User/main.o
  .text.CPU_CACHE_Disable
@@ -12703,238 +12702,238 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a
 LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a
 
-.debug_info     0x00000000    0x2ac8a
+.debug_info     0x00000000    0x2ac6c
  .debug_info    0x00000000       0xae ./AppLogic/appLogic.o
  .debug_info    0x000000ae       0x30 ./Application/Startup/startup_stm32h750xbhx.o
- .debug_info    0x000000de     0x2535 ./Application/User/main.o
- .debug_info    0x00002613      0x730 ./Application/User/stm32h7xx_it.o
- .debug_info    0x00002d43      0x6a3 ./Application/User/syscalls.o
- .debug_info    0x000033e6      0x168 ./Application/User/sysmem.o
- .debug_info    0x0000354e     0x2087 ./Application/User/usbh_conf.o
- .debug_info    0x000055d5      0x482 ./Display/display.o
- .debug_info    0x00005a57      0xaaf ./Drivers/BSP/Components/ft5336.o
- .debug_info    0x00006506     0x1199 ./Drivers/BSP/Components/ft5336_reg.o
- .debug_info    0x0000769f      0xa85 ./Drivers/BSP/Components/mt48lc4m32b2.o
- .debug_info    0x00008124      0xfea ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
- .debug_info    0x0000910e     0x1557 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
- .debug_info    0x0000a665     0x3295 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
- .debug_info    0x0000d8fa     0x13c6 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
- .debug_info    0x0000ecc0      0xaca ./Drivers/CMSIS/system_stm32h7xx.o
- .debug_info    0x0000f78a     0x1541 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
- .debug_info    0x00010ccb     0x10b7 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
- .debug_info    0x00011d82     0x10ce ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
- .debug_info    0x00012e50      0xc5a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
- .debug_info    0x00013aaa     0x11a2 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
- .debug_info    0x00014c4c     0x22c9 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
- .debug_info    0x00016f15      0xd84 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
- .debug_info    0x00017c99     0x1047 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
- .debug_info    0x00018ce0      0xbd2 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
- .debug_info    0x000198b2      0xe6a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
- .debug_info    0x0001a71c     0x1225 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
- .debug_info    0x0001b941     0x107c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
- .debug_info    0x0001c9bd     0x2bae ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
- .debug_info    0x0001f56b     0x4b1d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
- .debug_info    0x00024088      0xfbf ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
- .debug_info    0x00025047      0xbe3 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
- .debug_info    0x00025c2a     0x1a1e ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
- .debug_info    0x00027648      0x95b ./FK/FlexiKeyboard.o
- .debug_info    0x00027fa3      0xfb3 ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
- .debug_info    0x00028f56      0xa8f ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
- .debug_info    0x000299e5     0x12a5 ./Utilities/stm32_lcd.o
+ .debug_info    0x000000de     0x2517 ./Application/User/main.o
+ .debug_info    0x000025f5      0x730 ./Application/User/stm32h7xx_it.o
+ .debug_info    0x00002d25      0x6a3 ./Application/User/syscalls.o
+ .debug_info    0x000033c8      0x168 ./Application/User/sysmem.o
+ .debug_info    0x00003530     0x2087 ./Application/User/usbh_conf.o
+ .debug_info    0x000055b7      0x482 ./Display/display.o
+ .debug_info    0x00005a39      0xaaf ./Drivers/BSP/Components/ft5336.o
+ .debug_info    0x000064e8     0x1199 ./Drivers/BSP/Components/ft5336_reg.o
+ .debug_info    0x00007681      0xa85 ./Drivers/BSP/Components/mt48lc4m32b2.o
+ .debug_info    0x00008106      0xfea ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
+ .debug_info    0x000090f0     0x1557 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+ .debug_info    0x0000a647     0x3295 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+ .debug_info    0x0000d8dc     0x13c6 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
+ .debug_info    0x0000eca2      0xaca ./Drivers/CMSIS/system_stm32h7xx.o
+ .debug_info    0x0000f76c     0x1541 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
+ .debug_info    0x00010cad     0x10b7 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
+ .debug_info    0x00011d64     0x10ce ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
+ .debug_info    0x00012e32      0xc5a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
+ .debug_info    0x00013a8c     0x11a2 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
+ .debug_info    0x00014c2e     0x22c9 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
+ .debug_info    0x00016ef7      0xd84 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
+ .debug_info    0x00017c7b     0x1047 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
+ .debug_info    0x00018cc2      0xbd2 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
+ .debug_info    0x00019894      0xe6a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
+ .debug_info    0x0001a6fe     0x1225 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
+ .debug_info    0x0001b923     0x107c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
+ .debug_info    0x0001c99f     0x2bae ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
+ .debug_info    0x0001f54d     0x4b1d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
+ .debug_info    0x0002406a      0xfbf ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
+ .debug_info    0x00025029      0xbe3 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
+ .debug_info    0x00025c0c     0x1a1e ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
+ .debug_info    0x0002762a      0x95b ./FK/FlexiKeyboard.o
+ .debug_info    0x00027f85      0xfb3 ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
+ .debug_info    0x00028f38      0xa8f ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
+ .debug_info    0x000299c7     0x12a5 ./Utilities/stm32_lcd.o
 
-.debug_abbrev   0x00000000     0x53c7
+.debug_abbrev   0x00000000     0x53bf
  .debug_abbrev  0x00000000       0x56 ./AppLogic/appLogic.o
  .debug_abbrev  0x00000056       0x24 ./Application/Startup/startup_stm32h750xbhx.o
- .debug_abbrev  0x0000007a      0x41e ./Application/User/main.o
- .debug_abbrev  0x00000498      0x1a4 ./Application/User/stm32h7xx_it.o
- .debug_abbrev  0x0000063c      0x1b6 ./Application/User/syscalls.o
- .debug_abbrev  0x000007f2       0xbc ./Application/User/sysmem.o
- .debug_abbrev  0x000008ae      0x3ac ./Application/User/usbh_conf.o
- .debug_abbrev  0x00000c5a      0x166 ./Display/display.o
- .debug_abbrev  0x00000dc0      0x226 ./Drivers/BSP/Components/ft5336.o
- .debug_abbrev  0x00000fe6      0x145 ./Drivers/BSP/Components/ft5336_reg.o
- .debug_abbrev  0x0000112b      0x225 ./Drivers/BSP/Components/mt48lc4m32b2.o
- .debug_abbrev  0x00001350      0x2ae ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
- .debug_abbrev  0x000015fe      0x348 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
- .debug_abbrev  0x00001946      0x344 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
- .debug_abbrev  0x00001c8a      0x2d1 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
- .debug_abbrev  0x00001f5b      0x152 ./Drivers/CMSIS/system_stm32h7xx.o
- .debug_abbrev  0x000020ad      0x295 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
- .debug_abbrev  0x00002342      0x339 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
- .debug_abbrev  0x0000267b      0x225 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
- .debug_abbrev  0x000028a0      0x205 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
- .debug_abbrev  0x00002aa5      0x296 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
- .debug_abbrev  0x00002d3b      0x25d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
- .debug_abbrev  0x00002f98      0x1f5 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
- .debug_abbrev  0x0000318d      0x23a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
- .debug_abbrev  0x000033c7      0x1ff ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
- .debug_abbrev  0x000035c6      0x2c8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
- .debug_abbrev  0x0000388e      0x269 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
- .debug_abbrev  0x00003af7      0x209 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
- .debug_abbrev  0x00003d00      0x276 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
- .debug_abbrev  0x00003f76      0x33d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
- .debug_abbrev  0x000042b3      0x2d2 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
- .debug_abbrev  0x00004585      0x1ac ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
- .debug_abbrev  0x00004731      0x2b3 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
- .debug_abbrev  0x000049e4      0x212 ./FK/FlexiKeyboard.o
- .debug_abbrev  0x00004bf6      0x32a ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
- .debug_abbrev  0x00004f20      0x281 ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
- .debug_abbrev  0x000051a1      0x226 ./Utilities/stm32_lcd.o
+ .debug_abbrev  0x0000007a      0x416 ./Application/User/main.o
+ .debug_abbrev  0x00000490      0x1a4 ./Application/User/stm32h7xx_it.o
+ .debug_abbrev  0x00000634      0x1b6 ./Application/User/syscalls.o
+ .debug_abbrev  0x000007ea       0xbc ./Application/User/sysmem.o
+ .debug_abbrev  0x000008a6      0x3ac ./Application/User/usbh_conf.o
+ .debug_abbrev  0x00000c52      0x166 ./Display/display.o
+ .debug_abbrev  0x00000db8      0x226 ./Drivers/BSP/Components/ft5336.o
+ .debug_abbrev  0x00000fde      0x145 ./Drivers/BSP/Components/ft5336_reg.o
+ .debug_abbrev  0x00001123      0x225 ./Drivers/BSP/Components/mt48lc4m32b2.o
+ .debug_abbrev  0x00001348      0x2ae ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
+ .debug_abbrev  0x000015f6      0x348 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+ .debug_abbrev  0x0000193e      0x344 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+ .debug_abbrev  0x00001c82      0x2d1 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
+ .debug_abbrev  0x00001f53      0x152 ./Drivers/CMSIS/system_stm32h7xx.o
+ .debug_abbrev  0x000020a5      0x295 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
+ .debug_abbrev  0x0000233a      0x339 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
+ .debug_abbrev  0x00002673      0x225 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
+ .debug_abbrev  0x00002898      0x205 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
+ .debug_abbrev  0x00002a9d      0x296 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
+ .debug_abbrev  0x00002d33      0x25d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
+ .debug_abbrev  0x00002f90      0x1f5 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
+ .debug_abbrev  0x00003185      0x23a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
+ .debug_abbrev  0x000033bf      0x1ff ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
+ .debug_abbrev  0x000035be      0x2c8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
+ .debug_abbrev  0x00003886      0x269 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
+ .debug_abbrev  0x00003aef      0x209 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
+ .debug_abbrev  0x00003cf8      0x276 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
+ .debug_abbrev  0x00003f6e      0x33d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
+ .debug_abbrev  0x000042ab      0x2d2 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
+ .debug_abbrev  0x0000457d      0x1ac ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
+ .debug_abbrev  0x00004729      0x2b3 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
+ .debug_abbrev  0x000049dc      0x212 ./FK/FlexiKeyboard.o
+ .debug_abbrev  0x00004bee      0x32a ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
+ .debug_abbrev  0x00004f18      0x281 ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
+ .debug_abbrev  0x00005199      0x226 ./Utilities/stm32_lcd.o
 
-.debug_aranges  0x00000000     0x2130
+.debug_aranges  0x00000000     0x2128
  .debug_aranges
                 0x00000000       0x20 ./AppLogic/appLogic.o
  .debug_aranges
                 0x00000020       0x28 ./Application/Startup/startup_stm32h750xbhx.o
  .debug_aranges
-                0x00000048       0x70 ./Application/User/main.o
+                0x00000048       0x68 ./Application/User/main.o
  .debug_aranges
-                0x000000b8       0x68 ./Application/User/stm32h7xx_it.o
+                0x000000b0       0x68 ./Application/User/stm32h7xx_it.o
  .debug_aranges
-                0x00000120       0xa8 ./Application/User/syscalls.o
+                0x00000118       0xa8 ./Application/User/syscalls.o
  .debug_aranges
-                0x000001c8       0x20 ./Application/User/sysmem.o
+                0x000001c0       0x20 ./Application/User/sysmem.o
  .debug_aranges
-                0x000001e8       0xd0 ./Application/User/usbh_conf.o
+                0x000001e0       0xd0 ./Application/User/usbh_conf.o
  .debug_aranges
-                0x000002b8       0x28 ./Display/display.o
+                0x000002b0       0x28 ./Display/display.o
  .debug_aranges
-                0x000002e0       0x98 ./Drivers/BSP/Components/ft5336.o
+                0x000002d8       0x98 ./Drivers/BSP/Components/ft5336.o
  .debug_aranges
-                0x00000378      0x230 ./Drivers/BSP/Components/ft5336_reg.o
+                0x00000370      0x230 ./Drivers/BSP/Components/ft5336_reg.o
  .debug_aranges
-                0x000005a8       0x70 ./Drivers/BSP/Components/mt48lc4m32b2.o
+                0x000005a0       0x70 ./Drivers/BSP/Components/mt48lc4m32b2.o
  .debug_aranges
-                0x00000618       0x90 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
+                0x00000610       0x90 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
  .debug_aranges
-                0x000006a8       0x98 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+                0x000006a0       0x98 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
  .debug_aranges
-                0x00000740      0x150 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+                0x00000738      0x150 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
  .debug_aranges
-                0x00000890       0x50 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
+                0x00000888       0x50 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
  .debug_aranges
-                0x000008e0       0x30 ./Drivers/CMSIS/system_stm32h7xx.o
+                0x000008d8       0x30 ./Drivers/CMSIS/system_stm32h7xx.o
  .debug_aranges
-                0x00000910      0x198 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
+                0x00000908      0x198 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
  .debug_aranges
-                0x00000aa8      0x130 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
+                0x00000aa0      0x130 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
  .debug_aranges
-                0x00000bd8      0x118 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
+                0x00000bd0      0x118 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
  .debug_aranges
-                0x00000cf0       0x58 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
+                0x00000ce8       0x58 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
  .debug_aranges
-                0x00000d48      0x100 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
+                0x00000d40      0x100 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
  .debug_aranges
-                0x00000e48      0x2a0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
+                0x00000e40      0x2a0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
  .debug_aranges
-                0x000010e8       0x48 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
+                0x000010e0       0x48 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
  .debug_aranges
-                0x00001130      0x158 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
+                0x00001128      0x158 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
  .debug_aranges
-                0x00001288       0xc0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
+                0x00001280       0xc0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
  .debug_aranges
-                0x00001348       0x88 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
+                0x00001340       0x88 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
  .debug_aranges
-                0x000013d0       0xf8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
+                0x000013c8       0xf8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
  .debug_aranges
-                0x000014c8       0xe8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
+                0x000014c0       0xe8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
  .debug_aranges
-                0x000015b0      0x3e0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
+                0x000015a8      0x3e0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
  .debug_aranges
-                0x00001990      0x248 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
+                0x00001988      0x248 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
  .debug_aranges
-                0x00001bd8       0xa8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
+                0x00001bd0       0xa8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
  .debug_aranges
-                0x00001c80       0xc8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
+                0x00001c78       0xc8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
  .debug_aranges
-                0x00001d48      0x1a0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
+                0x00001d40      0x1a0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
  .debug_aranges
-                0x00001ee8       0x38 ./FK/FlexiKeyboard.o
+                0x00001ee0       0x38 ./FK/FlexiKeyboard.o
  .debug_aranges
-                0x00001f20       0xc0 ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
+                0x00001f18       0xc0 ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
  .debug_aranges
-                0x00001fe0       0x40 ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
+                0x00001fd8       0x40 ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
  .debug_aranges
-                0x00002020      0x110 ./Utilities/stm32_lcd.o
+                0x00002018      0x110 ./Utilities/stm32_lcd.o
 
 .debug_rnglists
-                0x00000000     0x19c0
+                0x00000000     0x19ba
  .debug_rnglists
                 0x00000000       0x13 ./AppLogic/appLogic.o
  .debug_rnglists
                 0x00000013       0x19 ./Application/Startup/startup_stm32h750xbhx.o
  .debug_rnglists
-                0x0000002c       0x54 ./Application/User/main.o
+                0x0000002c       0x4e ./Application/User/main.o
  .debug_rnglists
-                0x00000080       0x49 ./Application/User/stm32h7xx_it.o
+                0x0000007a       0x49 ./Application/User/stm32h7xx_it.o
  .debug_rnglists
-                0x000000c9       0x79 ./Application/User/syscalls.o
+                0x000000c3       0x79 ./Application/User/syscalls.o
  .debug_rnglists
-                0x00000142       0x13 ./Application/User/sysmem.o
+                0x0000013c       0x13 ./Application/User/sysmem.o
  .debug_rnglists
-                0x00000155       0x98 ./Application/User/usbh_conf.o
+                0x0000014f       0x98 ./Application/User/usbh_conf.o
  .debug_rnglists
-                0x000001ed       0x19 ./Display/display.o
+                0x000001e7       0x19 ./Display/display.o
  .debug_rnglists
-                0x00000206       0x70 ./Drivers/BSP/Components/ft5336.o
+                0x00000200       0x70 ./Drivers/BSP/Components/ft5336.o
  .debug_rnglists
-                0x00000276      0x19f ./Drivers/BSP/Components/ft5336_reg.o
+                0x00000270      0x19f ./Drivers/BSP/Components/ft5336_reg.o
  .debug_rnglists
-                0x00000415       0x4f ./Drivers/BSP/Components/mt48lc4m32b2.o
+                0x0000040f       0x4f ./Drivers/BSP/Components/mt48lc4m32b2.o
  .debug_rnglists
-                0x00000464       0x69 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
+                0x0000045e       0x69 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
  .debug_rnglists
-                0x000004cd       0x90 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+                0x000004c7       0x90 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
  .debug_rnglists
-                0x0000055d      0x107 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+                0x00000557      0x107 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
  .debug_rnglists
-                0x00000664       0x3a ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
+                0x0000065e       0x3a ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
  .debug_rnglists
-                0x0000069e       0x21 ./Drivers/CMSIS/system_stm32h7xx.o
+                0x00000698       0x21 ./Drivers/CMSIS/system_stm32h7xx.o
  .debug_rnglists
-                0x000006bf      0x131 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
+                0x000006b9      0x131 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
  .debug_rnglists
-                0x000007f0       0xe0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
+                0x000007ea       0xe0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
  .debug_rnglists
-                0x000008d0       0xde ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
+                0x000008ca       0xde ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
  .debug_rnglists
-                0x000009ae       0x3f ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
+                0x000009a8       0x3f ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
  .debug_rnglists
-                0x000009ed       0xc4 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
+                0x000009e7       0xc4 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
  .debug_rnglists
-                0x00000ab1      0x22a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
+                0x00000aab      0x22a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
  .debug_rnglists
-                0x00000cdb       0x35 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
+                0x00000cd5       0x35 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
  .debug_rnglists
-                0x00000d10      0x10a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
+                0x00000d0a      0x10a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
  .debug_rnglists
-                0x00000e1a       0x9c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
+                0x00000e14       0x9c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
  .debug_rnglists
-                0x00000eb6       0x68 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
+                0x00000eb0       0x68 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
  .debug_rnglists
-                0x00000f1e       0xc0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
+                0x00000f18       0xc0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
  .debug_rnglists
-                0x00000fde       0xb1 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
+                0x00000fd8       0xb1 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
  .debug_rnglists
-                0x0000108f      0x328 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
+                0x00001089      0x328 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
  .debug_rnglists
-                0x000013b7      0x1fa ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
+                0x000013b1      0x1fa ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
  .debug_rnglists
-                0x000015b1       0x7f ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
+                0x000015ab       0x7f ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
  .debug_rnglists
-                0x00001630       0x95 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
+                0x0000162a       0x95 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
  .debug_rnglists
-                0x000016c5      0x147 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
+                0x000016bf      0x147 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
  .debug_rnglists
-                0x0000180c       0x27 ./FK/FlexiKeyboard.o
+                0x00001806       0x27 ./FK/FlexiKeyboard.o
  .debug_rnglists
-                0x00001833       0x8f ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
+                0x0000182d       0x8f ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
  .debug_rnglists
-                0x000018c2       0x2b ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
+                0x000018bc       0x2b ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
  .debug_rnglists
-                0x000018ed       0xd3 ./Utilities/stm32_lcd.o
+                0x000018e7       0xd3 ./Utilities/stm32_lcd.o
 
-.debug_macro    0x00000000    0x414a5
+.debug_macro    0x00000000    0x414a1
  .debug_macro   0x00000000      0x568 ./AppLogic/appLogic.o
  .debug_macro   0x00000568      0xb08 ./AppLogic/appLogic.o
  .debug_macro   0x00001070      0x104 ./AppLogic/appLogic.o
@@ -13047,111 +13046,111 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x00038d41       0x65 ./AppLogic/appLogic.o
  .debug_macro   0x00038da6       0xeb ./AppLogic/appLogic.o
  .debug_macro   0x00038e91       0x34 ./AppLogic/appLogic.o
- .debug_macro   0x00038ec5      0x59c ./Application/User/main.o
- .debug_macro   0x00039461       0x16 ./Application/User/main.o
- .debug_macro   0x00039477       0x22 ./Application/User/main.o
- .debug_macro   0x00039499      0x568 ./Application/User/stm32h7xx_it.o
- .debug_macro   0x00039a01      0x274 ./Application/User/syscalls.o
- .debug_macro   0x00039c75       0x5b ./Application/User/syscalls.o
- .debug_macro   0x00039cd0       0x94 ./Application/User/syscalls.o
- .debug_macro   0x00039d64       0x57 ./Application/User/syscalls.o
- .debug_macro   0x00039dbb       0x10 ./Application/User/syscalls.o
- .debug_macro   0x00039dcb       0x10 ./Application/User/syscalls.o
- .debug_macro   0x00039ddb       0x10 ./Application/User/syscalls.o
- .debug_macro   0x00039deb       0x10 ./Application/User/syscalls.o
- .debug_macro   0x00039dfb       0x1c ./Application/User/syscalls.o
- .debug_macro   0x00039e17       0x52 ./Application/User/syscalls.o
- .debug_macro   0x00039e69       0x22 ./Application/User/syscalls.o
- .debug_macro   0x00039e8b       0x10 ./Application/User/syscalls.o
- .debug_macro   0x00039e9b       0x52 ./Application/User/syscalls.o
- .debug_macro   0x00039eed       0xcf ./Application/User/syscalls.o
- .debug_macro   0x00039fbc       0x1c ./Application/User/syscalls.o
- .debug_macro   0x00039fd8       0x3d ./Application/User/syscalls.o
- .debug_macro   0x0003a015       0x35 ./Application/User/syscalls.o
- .debug_macro   0x0003a04a      0x12c ./Application/User/syscalls.o
- .debug_macro   0x0003a176       0x10 ./Application/User/syscalls.o
- .debug_macro   0x0003a186      0x242 ./Application/User/syscalls.o
- .debug_macro   0x0003a3c8       0x10 ./Application/User/syscalls.o
- .debug_macro   0x0003a3d8      0x18a ./Application/User/syscalls.o
- .debug_macro   0x0003a562       0x16 ./Application/User/syscalls.o
- .debug_macro   0x0003a578       0xce ./Application/User/syscalls.o
- .debug_macro   0x0003a646      0x112 ./Application/User/sysmem.o
- .debug_macro   0x0003a758      0x23c ./Application/User/sysmem.o
- .debug_macro   0x0003a994      0x408 ./Application/User/usbh_conf.o
- .debug_macro   0x0003ad9c      0x568 ./Display/display.o
- .debug_macro   0x0003b304       0x93 ./Drivers/BSP/Components/ft5336.o
- .debug_macro   0x0003b397      0x5ae ./Drivers/BSP/Components/ft5336.o
- .debug_macro   0x0003b945       0x72 ./Drivers/BSP/Components/ft5336_reg.o
- .debug_macro   0x0003b9b7      0x341 ./Drivers/BSP/Components/mt48lc4m32b2.o
- .debug_macro   0x0003bcf8       0x10 ./Drivers/BSP/Components/mt48lc4m32b2.o
- .debug_macro   0x0003bd08      0x34a ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
- .debug_macro   0x0003c052      0x39e ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
- .debug_macro   0x0003c3f0       0x64 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
- .debug_macro   0x0003c454      0x3cd ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
- .debug_macro   0x0003c821       0x6a ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
- .debug_macro   0x0003c88b      0x362 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
- .debug_macro   0x0003cbed      0x329 ./Drivers/CMSIS/system_stm32h7xx.o
- .debug_macro   0x0003cf16      0x34d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
- .debug_macro   0x0003d263      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
- .debug_macro   0x0003d586      0x332 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
- .debug_macro   0x0003d8b8      0x32a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
- .debug_macro   0x0003dbe2      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
- .debug_macro   0x0003df05      0x3ef ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
- .debug_macro   0x0003e2f4      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
- .debug_macro   0x0003e617      0x32b ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
- .debug_macro   0x0003e942      0x332 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
- .debug_macro   0x0003ec74      0x347 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
- .debug_macro   0x0003efbb      0x341 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
- .debug_macro   0x0003f2fc      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
- .debug_macro   0x0003f61f      0x324 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
- .debug_macro   0x0003f943      0x34e ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
- .debug_macro   0x0003fc91      0x32f ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
- .debug_macro   0x0003ffc0      0x34d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
- .debug_macro   0x0004030d      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
- .debug_macro   0x00040630      0x56d ./FK/FlexiKeyboard.o
- .debug_macro   0x00040b9d       0x10 ./FK/FlexiKeyboard.o
- .debug_macro   0x00040bad      0x41a ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
- .debug_macro   0x00040fc7      0x40c ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
- .debug_macro   0x000413d3       0xd2 ./Utilities/stm32_lcd.o
+ .debug_macro   0x00038ec5      0x598 ./Application/User/main.o
+ .debug_macro   0x0003945d       0x16 ./Application/User/main.o
+ .debug_macro   0x00039473       0x22 ./Application/User/main.o
+ .debug_macro   0x00039495      0x568 ./Application/User/stm32h7xx_it.o
+ .debug_macro   0x000399fd      0x274 ./Application/User/syscalls.o
+ .debug_macro   0x00039c71       0x5b ./Application/User/syscalls.o
+ .debug_macro   0x00039ccc       0x94 ./Application/User/syscalls.o
+ .debug_macro   0x00039d60       0x57 ./Application/User/syscalls.o
+ .debug_macro   0x00039db7       0x10 ./Application/User/syscalls.o
+ .debug_macro   0x00039dc7       0x10 ./Application/User/syscalls.o
+ .debug_macro   0x00039dd7       0x10 ./Application/User/syscalls.o
+ .debug_macro   0x00039de7       0x10 ./Application/User/syscalls.o
+ .debug_macro   0x00039df7       0x1c ./Application/User/syscalls.o
+ .debug_macro   0x00039e13       0x52 ./Application/User/syscalls.o
+ .debug_macro   0x00039e65       0x22 ./Application/User/syscalls.o
+ .debug_macro   0x00039e87       0x10 ./Application/User/syscalls.o
+ .debug_macro   0x00039e97       0x52 ./Application/User/syscalls.o
+ .debug_macro   0x00039ee9       0xcf ./Application/User/syscalls.o
+ .debug_macro   0x00039fb8       0x1c ./Application/User/syscalls.o
+ .debug_macro   0x00039fd4       0x3d ./Application/User/syscalls.o
+ .debug_macro   0x0003a011       0x35 ./Application/User/syscalls.o
+ .debug_macro   0x0003a046      0x12c ./Application/User/syscalls.o
+ .debug_macro   0x0003a172       0x10 ./Application/User/syscalls.o
+ .debug_macro   0x0003a182      0x242 ./Application/User/syscalls.o
+ .debug_macro   0x0003a3c4       0x10 ./Application/User/syscalls.o
+ .debug_macro   0x0003a3d4      0x18a ./Application/User/syscalls.o
+ .debug_macro   0x0003a55e       0x16 ./Application/User/syscalls.o
+ .debug_macro   0x0003a574       0xce ./Application/User/syscalls.o
+ .debug_macro   0x0003a642      0x112 ./Application/User/sysmem.o
+ .debug_macro   0x0003a754      0x23c ./Application/User/sysmem.o
+ .debug_macro   0x0003a990      0x408 ./Application/User/usbh_conf.o
+ .debug_macro   0x0003ad98      0x568 ./Display/display.o
+ .debug_macro   0x0003b300       0x93 ./Drivers/BSP/Components/ft5336.o
+ .debug_macro   0x0003b393      0x5ae ./Drivers/BSP/Components/ft5336.o
+ .debug_macro   0x0003b941       0x72 ./Drivers/BSP/Components/ft5336_reg.o
+ .debug_macro   0x0003b9b3      0x341 ./Drivers/BSP/Components/mt48lc4m32b2.o
+ .debug_macro   0x0003bcf4       0x10 ./Drivers/BSP/Components/mt48lc4m32b2.o
+ .debug_macro   0x0003bd04      0x34a ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
+ .debug_macro   0x0003c04e      0x39e ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+ .debug_macro   0x0003c3ec       0x64 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+ .debug_macro   0x0003c450      0x3cd ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+ .debug_macro   0x0003c81d       0x6a ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+ .debug_macro   0x0003c887      0x362 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
+ .debug_macro   0x0003cbe9      0x329 ./Drivers/CMSIS/system_stm32h7xx.o
+ .debug_macro   0x0003cf12      0x34d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
+ .debug_macro   0x0003d25f      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
+ .debug_macro   0x0003d582      0x332 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
+ .debug_macro   0x0003d8b4      0x32a ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
+ .debug_macro   0x0003dbde      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
+ .debug_macro   0x0003df01      0x3ef ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
+ .debug_macro   0x0003e2f0      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
+ .debug_macro   0x0003e613      0x32b ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
+ .debug_macro   0x0003e93e      0x332 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
+ .debug_macro   0x0003ec70      0x347 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
+ .debug_macro   0x0003efb7      0x341 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
+ .debug_macro   0x0003f2f8      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
+ .debug_macro   0x0003f61b      0x324 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
+ .debug_macro   0x0003f93f      0x34e ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
+ .debug_macro   0x0003fc8d      0x32f ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
+ .debug_macro   0x0003ffbc      0x34d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
+ .debug_macro   0x00040309      0x323 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
+ .debug_macro   0x0004062c      0x56d ./FK/FlexiKeyboard.o
+ .debug_macro   0x00040b99       0x10 ./FK/FlexiKeyboard.o
+ .debug_macro   0x00040ba9      0x41a ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
+ .debug_macro   0x00040fc3      0x40c ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
+ .debug_macro   0x000413cf       0xd2 ./Utilities/stm32_lcd.o
 
-.debug_line     0x00000000    0x2d225
+.debug_line     0x00000000    0x2d200
  .debug_line    0x00000000      0xe7d ./AppLogic/appLogic.o
  .debug_line    0x00000e7d       0x7b ./Application/Startup/startup_stm32h750xbhx.o
- .debug_line    0x00000ef8     0x12c5 ./Application/User/main.o
- .debug_line    0x000021bd      0xf39 ./Application/User/stm32h7xx_it.o
- .debug_line    0x000030f6      0x8b4 ./Application/User/syscalls.o
- .debug_line    0x000039aa      0x590 ./Application/User/sysmem.o
- .debug_line    0x00003f3a      0xe71 ./Application/User/usbh_conf.o
- .debug_line    0x00004dab      0xeb4 ./Display/display.o
- .debug_line    0x00005c5f      0x7be ./Drivers/BSP/Components/ft5336.o
- .debug_line    0x0000641d      0xc59 ./Drivers/BSP/Components/ft5336_reg.o
- .debug_line    0x00007076      0xc15 ./Drivers/BSP/Components/mt48lc4m32b2.o
- .debug_line    0x00007c8b      0xc6e ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
- .debug_line    0x000088f9      0xf82 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
- .debug_line    0x0000987b     0x15cf ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
- .debug_line    0x0000ae4a      0xc55 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
- .debug_line    0x0000ba9f      0xbc2 ./Drivers/CMSIS/system_stm32h7xx.o
- .debug_line    0x0000c661      0xfce ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
- .debug_line    0x0000d62f      0xfb8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
- .debug_line    0x0000e5e7     0x1465 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
- .debug_line    0x0000fa4c      0xe57 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
- .debug_line    0x000108a3     0x185d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
- .debug_line    0x00012100     0x3d45 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
- .debug_line    0x00015e45      0xb5c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
- .debug_line    0x000169a1     0x15f8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
- .debug_line    0x00017f99     0x162e ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
- .debug_line    0x000195c7     0x1675 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
- .debug_line    0x0001ac3c     0x1f81 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
- .debug_line    0x0001cbbd      0xff6 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
- .debug_line    0x0001dbb3     0x4122 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
- .debug_line    0x00021cd5     0x3a55 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
- .debug_line    0x0002572a      0xf64 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
- .debug_line    0x0002668e      0xdf6 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
- .debug_line    0x00027484     0x1fea ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
- .debug_line    0x0002946e      0xf81 ./FK/FlexiKeyboard.o
- .debug_line    0x0002a3ef     0x12bf ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
- .debug_line    0x0002b6ae      0xbb9 ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
- .debug_line    0x0002c267      0xfbe ./Utilities/stm32_lcd.o
+ .debug_line    0x00000ef8     0x12a0 ./Application/User/main.o
+ .debug_line    0x00002198      0xf39 ./Application/User/stm32h7xx_it.o
+ .debug_line    0x000030d1      0x8b4 ./Application/User/syscalls.o
+ .debug_line    0x00003985      0x590 ./Application/User/sysmem.o
+ .debug_line    0x00003f15      0xe71 ./Application/User/usbh_conf.o
+ .debug_line    0x00004d86      0xeb4 ./Display/display.o
+ .debug_line    0x00005c3a      0x7be ./Drivers/BSP/Components/ft5336.o
+ .debug_line    0x000063f8      0xc59 ./Drivers/BSP/Components/ft5336_reg.o
+ .debug_line    0x00007051      0xc15 ./Drivers/BSP/Components/mt48lc4m32b2.o
+ .debug_line    0x00007c66      0xc6e ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
+ .debug_line    0x000088d4      0xf82 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+ .debug_line    0x00009856     0x15cf ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+ .debug_line    0x0000ae25      0xc55 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
+ .debug_line    0x0000ba7a      0xbc2 ./Drivers/CMSIS/system_stm32h7xx.o
+ .debug_line    0x0000c63c      0xfce ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
+ .debug_line    0x0000d60a      0xfb8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
+ .debug_line    0x0000e5c2     0x1465 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
+ .debug_line    0x0000fa27      0xe57 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
+ .debug_line    0x0001087e     0x185d ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
+ .debug_line    0x000120db     0x3d45 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
+ .debug_line    0x00015e20      0xb5c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
+ .debug_line    0x0001697c     0x15f8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
+ .debug_line    0x00017f74     0x162e ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
+ .debug_line    0x000195a2     0x1675 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
+ .debug_line    0x0001ac17     0x1f81 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
+ .debug_line    0x0001cb98      0xff6 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
+ .debug_line    0x0001db8e     0x4122 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
+ .debug_line    0x00021cb0     0x3a55 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
+ .debug_line    0x00025705      0xf64 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
+ .debug_line    0x00026669      0xdf6 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
+ .debug_line    0x0002745f     0x1fea ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
+ .debug_line    0x00029449      0xf81 ./FK/FlexiKeyboard.o
+ .debug_line    0x0002a3ca     0x12bf ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
+ .debug_line    0x0002b689      0xbb9 ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
+ .debug_line    0x0002c242      0xfbe ./Utilities/stm32_lcd.o
 
 .debug_str      0x00000000   0x18db92
  .debug_str     0x00000000   0x18db92 ./AppLogic/appLogic.o
@@ -13232,71 +13231,71 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .comment       0x00000043       0x44 ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
  .comment       0x00000043       0x44 ./Utilities/stm32_lcd.o
 
-.debug_frame    0x00000000     0x9608
+.debug_frame    0x00000000     0x95e0
  .debug_frame   0x00000000       0x38 ./AppLogic/appLogic.o
- .debug_frame   0x00000038      0x194 ./Application/User/main.o
- .debug_frame   0x000001cc      0x128 ./Application/User/stm32h7xx_it.o
- .debug_frame   0x000002f4      0x2ac ./Application/User/syscalls.o
- .debug_frame   0x000005a0       0x34 ./Application/User/sysmem.o
- .debug_frame   0x000005d4      0x368 ./Application/User/usbh_conf.o
- .debug_frame   0x0000093c       0x50 ./Display/display.o
- .debug_frame   0x0000098c      0x268 ./Drivers/BSP/Components/ft5336.o
- .debug_frame   0x00000bf4      0x984 ./Drivers/BSP/Components/ft5336_reg.o
- .debug_frame   0x00001578      0x19c ./Drivers/BSP/Components/mt48lc4m32b2.o
- .debug_frame   0x00001714      0x21c ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
- .debug_frame   0x00001930      0x250 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
- .debug_frame   0x00001b80      0x5c8 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
- .debug_frame   0x00002148      0x10c ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
- .debug_frame   0x00002254       0x78 ./Drivers/CMSIS/system_stm32h7xx.o
- .debug_frame   0x000022cc      0x690 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
- .debug_frame   0x0000295c      0x508 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
- .debug_frame   0x00002e64      0x4e8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
- .debug_frame   0x0000334c      0x14c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
- .debug_frame   0x00003498      0x470 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
- .debug_frame   0x00003908      0xc40 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
- .debug_frame   0x00004548      0x100 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
- .debug_frame   0x00004648      0x61c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
- .debug_frame   0x00004c64      0x34c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
- .debug_frame   0x00004fb0      0x1f8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
- .debug_frame   0x000051a8      0x414 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
- .debug_frame   0x000055bc      0x3f0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
- .debug_frame   0x000059ac     0x121c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
- .debug_frame   0x00006bc8      0xa94 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
- .debug_frame   0x0000765c      0x2c0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
- .debug_frame   0x0000791c      0x37c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
- .debug_frame   0x00007c98      0x7c0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
- .debug_frame   0x00008458       0xa0 ./FK/FlexiKeyboard.o
- .debug_frame   0x000084f8      0x334 ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
- .debug_frame   0x0000882c       0xcc ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
- .debug_frame   0x000088f8      0x4a0 ./Utilities/stm32_lcd.o
- .debug_frame   0x00008d98       0x50 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-mallocr.o)
- .debug_frame   0x00008de8       0x30 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-mlock.o)
- .debug_frame   0x00008e18      0x144 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-findfp.o)
- .debug_frame   0x00008f5c       0x34 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-fwalk.o)
- .debug_frame   0x00008f90       0x6c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-printf.o)
- .debug_frame   0x00008ffc       0x3c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-puts.o)
- .debug_frame   0x00009038       0x88 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-stdio.o)
- .debug_frame   0x000090c0       0x40 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-wbuf.o)
- .debug_frame   0x00009100       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-wsetup.o)
- .debug_frame   0x0000912c       0x20 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-memset.o)
- .debug_frame   0x0000914c       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-closer.o)
- .debug_frame   0x00009178       0x38 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-reent.o)
- .debug_frame   0x000091b0       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-lseekr.o)
- .debug_frame   0x000091dc       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-readr.o)
- .debug_frame   0x00009208       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-sbrkr.o)
- .debug_frame   0x00009234       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-writer.o)
- .debug_frame   0x00009260       0x20 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-errno.o)
- .debug_frame   0x00009280       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-init.o)
- .debug_frame   0x000092ac       0xb0 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-lock.o)
- .debug_frame   0x0000935c       0x38 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-freer.o)
- .debug_frame   0x00009394       0xa8 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-nano-vfprintf.o)
- .debug_frame   0x0000943c       0x60 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-nano-vfprintf_i.o)
- .debug_frame   0x0000949c       0x5c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-fflush.o)
- .debug_frame   0x000094f8       0x58 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-makebuf.o)
- .debug_frame   0x00009550       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-fstatr.o)
- .debug_frame   0x0000957c       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-isattyr.o)
- .debug_frame   0x000095a8       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x000095d4       0x34 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x00000038      0x16c ./Application/User/main.o
+ .debug_frame   0x000001a4      0x128 ./Application/User/stm32h7xx_it.o
+ .debug_frame   0x000002cc      0x2ac ./Application/User/syscalls.o
+ .debug_frame   0x00000578       0x34 ./Application/User/sysmem.o
+ .debug_frame   0x000005ac      0x368 ./Application/User/usbh_conf.o
+ .debug_frame   0x00000914       0x50 ./Display/display.o
+ .debug_frame   0x00000964      0x268 ./Drivers/BSP/Components/ft5336.o
+ .debug_frame   0x00000bcc      0x984 ./Drivers/BSP/Components/ft5336_reg.o
+ .debug_frame   0x00001550      0x19c ./Drivers/BSP/Components/mt48lc4m32b2.o
+ .debug_frame   0x000016ec      0x21c ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery.o
+ .debug_frame   0x00001908      0x250 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_bus.o
+ .debug_frame   0x00001b58      0x5c8 ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_lcd.o
+ .debug_frame   0x00002120      0x10c ./Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_sdram.o
+ .debug_frame   0x0000222c       0x78 ./Drivers/CMSIS/system_stm32h7xx.o
+ .debug_frame   0x000022a4      0x690 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal.o
+ .debug_frame   0x00002934      0x508 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_cortex.o
+ .debug_frame   0x00002e3c      0x4e8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_dma2d.o
+ .debug_frame   0x00003324      0x14c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_gpio.o
+ .debug_frame   0x00003470      0x470 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_hcd.o
+ .debug_frame   0x000038e0      0xc40 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c.o
+ .debug_frame   0x00004520      0x100 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_i2c_ex.o
+ .debug_frame   0x00004620      0x61c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_ltdc.o
+ .debug_frame   0x00004c3c      0x34c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_mdma.o
+ .debug_frame   0x00004f88      0x1f8 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc.o
+ .debug_frame   0x00005180      0x414 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_rcc_ex.o
+ .debug_frame   0x00005594      0x3f0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_sdram.o
+ .debug_frame   0x00005984     0x121c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_tim.o
+ .debug_frame   0x00006ba0      0xa94 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart.o
+ .debug_frame   0x00007634      0x2c0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_hal_uart_ex.o
+ .debug_frame   0x000078f4      0x37c ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_fmc.o
+ .debug_frame   0x00007c70      0x7c0 ./Drivers/STM32H7xx_HAL_Driver/stm32h7xx_ll_usb.o
+ .debug_frame   0x00008430       0xa0 ./FK/FlexiKeyboard.o
+ .debug_frame   0x000084d0      0x334 ./Middlewares/STM32_USBH_Library/Core/usbh_core.o
+ .debug_frame   0x00008804       0xcc ./Middlewares/STM32_USBH_Library/Core/usbh_pipes.o
+ .debug_frame   0x000088d0      0x4a0 ./Utilities/stm32_lcd.o
+ .debug_frame   0x00008d70       0x50 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-mallocr.o)
+ .debug_frame   0x00008dc0       0x30 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-mlock.o)
+ .debug_frame   0x00008df0      0x144 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-findfp.o)
+ .debug_frame   0x00008f34       0x34 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-fwalk.o)
+ .debug_frame   0x00008f68       0x6c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-printf.o)
+ .debug_frame   0x00008fd4       0x3c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-puts.o)
+ .debug_frame   0x00009010       0x88 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-stdio.o)
+ .debug_frame   0x00009098       0x40 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-wbuf.o)
+ .debug_frame   0x000090d8       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-wsetup.o)
+ .debug_frame   0x00009104       0x20 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-memset.o)
+ .debug_frame   0x00009124       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-closer.o)
+ .debug_frame   0x00009150       0x38 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-reent.o)
+ .debug_frame   0x00009188       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-lseekr.o)
+ .debug_frame   0x000091b4       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-readr.o)
+ .debug_frame   0x000091e0       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-sbrkr.o)
+ .debug_frame   0x0000920c       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-writer.o)
+ .debug_frame   0x00009238       0x20 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-errno.o)
+ .debug_frame   0x00009258       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-init.o)
+ .debug_frame   0x00009284       0xb0 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-lock.o)
+ .debug_frame   0x00009334       0x38 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-freer.o)
+ .debug_frame   0x0000936c       0xa8 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-nano-vfprintf.o)
+ .debug_frame   0x00009414       0x60 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-nano-vfprintf_i.o)
+ .debug_frame   0x00009474       0x5c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-fflush.o)
+ .debug_frame   0x000094d0       0x58 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-makebuf.o)
+ .debug_frame   0x00009528       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-fstatr.o)
+ .debug_frame   0x00009554       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-isattyr.o)
+ .debug_frame   0x00009580       0x2c C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x000095ac       0x34 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a(_udivmoddi4.o)
 
 .debug_line_str
                 0x00000000       0x68

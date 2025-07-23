@@ -22,7 +22,7 @@
 #include "color.h"
 #include "FlexiKeyboard.h"
 #include "display.h"
-#include "appLogic.c"
+#include "appLogic.h"
 #include <stdbool.h>
 /** @addtogroup STM32H7xx_HAL_Applications
   * @{
