@@ -2,6 +2,7 @@
 #define AL_H_
 #include "main.h"
 
-void AA(void);
+void handle_event(AppContext *ctx, uint8_t key);
+void InitializeAppContext(AppContext* ctx);
 
 #endif

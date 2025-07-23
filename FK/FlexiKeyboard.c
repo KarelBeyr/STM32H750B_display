@@ -1,5 +1,8 @@
 #include "FlexiKeyboard.h"
 
+#define NUM_ROWS 5
+#define NUM_COLS 5
+
 GPIOPin rowPins[NUM_ROWS] = {
     { GPIOG, GPIO_PIN_3 }, //D2
     { GPIOA, GPIO_PIN_6 }, //D3
@@ -16,7 +19,7 @@ GPIOPin colPins[NUM_COLS] = {
 	{ GPIOB, GPIO_PIN_15 }  //D11
 };
 
-const char keymap[5][5] = {
+const KeyboardButton keymap[5][5] = {
     {KEY_ESC,   KEY_6,    KEY_8,     KEY_Lock, KEY_F1},
     {KEY_3,     KEY_5,    KEY_7,     KEY_F5,   KEY_OFF},
     {KEY_2,     KEY_4,    KEY_Enter, KEY_F4,   KEY_ON},
@@ -27,7 +30,7 @@ const char keymap[5][5] = {
 volatile int lastRow = -1;
 volatile int lastCol = -1;
 volatile uint32_t lastTriggerTime = 0;
-uint8_t receivedChar;
+KeyboardButton receivedChar;
 
 void setAllRowsInactive(void)
 {
@@ -45,7 +48,7 @@ void setRowActive(int row)
     HAL_GPIO_WritePin(rowPins[row].port, rowPins[row].pin, GPIO_PIN_SET);
 }
 
-void ReadFlexiKeyboard(void)
+KeyboardButton ReadFlexiKeyboard(void)
 {
     for (int row = 0; row < NUM_ROWS; row++)
     {
@@ -54,39 +57,26 @@ void ReadFlexiKeyboard(void)
 
         for (int col = 0; col < NUM_COLS; col++)
         {
-
-        	//if (col == 2) break;
             if (HAL_GPIO_ReadPin(colPins[col].port, colPins[col].pin) == GPIO_PIN_SET)
             {
-//                uint32_t now = HAL_GetTick();
-//
-//                // Debounce/repeat suppression
-//                if (lastRow == row && lastCol == col && (now - lastTriggerTime < 300)) {
-//                    return;
-//                }
-//
-//                lastRow = row;
-//                lastCol = col;
-//                lastTriggerTime = now;
+                uint32_t now = HAL_GetTick();
 
-                // Key at (row, col) pressed!
+                // Debounce/repeat suppression
+                if (lastRow == row && lastCol == col && (now - lastTriggerTime < 300)) {
+                    return KEY_NULL;
+                }
+
+                lastRow = row;
+                lastCol = col;
+                lastTriggerTime = now;
+
                 receivedChar = keymap[row][col];
                 printf("Pressed row %d and col %d hopefully it is %c\r\n", row, col, receivedChar);
-
-
-
-//                AppEvent evt = {
-//                    .type = EVENT_KEY_PRESSED,
-//                    .key = receivedChar
-//                };
-
-                // handle_event(&ctx, &evt); // Uncomment if needed
-                //break; // Optionally break to avoid multiple key detections per scan
+                return receivedChar;
             }
         }
-
-        //setAllRowsInactive();  // Set all rows HIGH before next row scan
     }
+    return KEY_NULL;
 }
 
 void InitFlexiKeyboard(void)

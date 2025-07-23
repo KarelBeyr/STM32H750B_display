@@ -29,3 +29,38 @@ void InitializeLcd(void)
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
 }
+
+void uartSetCursorPosition(int row, int col) {
+  printf("\033[%d;%dH", row, col);
+}
+
+void uartClearScreen() {
+  printf("\033[2J");
+  printf("\033[H"); // Move cursor to top-left corner
+}
+
+void UartRenderState(AppContext *ctx) {
+  uartClearScreen();
+  uartSetCursorPosition(1, 1);
+  if (ctx->currentState == STATE_F1) {
+    printf("Voltage control");
+    uartSetCursorPosition(2, 1);
+    printf("Current input: %d", ctx->inputValue);
+    uartSetCursorPosition(3, 1);
+    if (ctx->voltage > 0) {
+      printf("Voltage: %dV", ctx->voltage);
+    } else {
+      printf("Voltage: N/A");
+    }
+    uartSetCursorPosition(4, 1);
+    if (ctx->isPwmRunning == true) {
+      printf("PWM is running at %dV", ctx->voltage);
+    } else {
+      printf("PWM is OFF");
+    }
+    uartSetCursorPosition(5, 1);
+    printf(ctx->message);
+  }
+
+  uartSetCursorPosition(7, 1);
+}

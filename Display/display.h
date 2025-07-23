@@ -4,5 +4,6 @@
 
 void Draw_Menu(void);
 void InitializeLcd(void);
+void UartRenderState(AppContext *ctx);
 
 #endif

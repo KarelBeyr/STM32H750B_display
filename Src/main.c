@@ -38,27 +38,6 @@ typedef enum {
   APPLICATION_RUNNIG    
 }MSC_ApplicationTypeDef;
 
-
-typedef enum {
-    STATE_F1,
-    STATE_F2,
-    STATE_F3,
-} AppState;
-
-typedef struct {
-	AppState currentState;
-
-	// F1 - screen where user enters voltage and can start/stop PWM
-  uint16_t voltage; // register holding voltage that has been validated and is ready to be sent to PWM
-  uint16_t inputValue; // register holding current value of "input field"
-  bool isVoltageEntered; // flag if we are ready to start PWM. Maybe redundant, we can check against voltage register. But its more robust this way
-  bool isPwmRunning;
-  char message[64]; // ad hoc message to display
-
-    // F2 - screen where user sets three calibration points - TODO later
-    uint16_t calibration_points[3]; // For mapping
-} AppContext;
-
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -91,7 +70,6 @@ int __io_putchar(int ch) {
   */
 int main(void)
 {
-AA();
   /* Configure the MPU attributes as Write Through for SDRAM*/
   MPU_Config();
 
@@ -115,6 +93,8 @@ AA();
   /* Configure LED1 */
   BSP_LED_Init(LED1);
 
+  AppContext ctx;
+  InitializeAppContext(&ctx);
 
   InitializeLcd();
   //CPU_CACHE_Disable();
@@ -127,8 +107,11 @@ AA();
   /* Infinite loop */  
   while (1)
   {
-	  HAL_Delay(100);
-	  ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
+	  UartRenderState(&ctx);
+	  HAL_Delay(10);
+	  KeyboardButton key = ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
+	  if (key == KEY_NULL) continue;
+	  handle_event(&ctx, key);
   }
 }
 

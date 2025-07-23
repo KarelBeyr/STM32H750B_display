@@ -1,1 +1,11 @@
-C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:3:6:AA	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:4:6:clearInput	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:8:6:clearVoltage	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:13:6:backspace	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:17:6:stopPWM	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:23:6:startPWM	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:29:6:setSTATE_F2	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:33:6:setSTATE_F1	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:37:6:validateAndSetVoltage	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:51:6:updateInput	40	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:60:6:handle_event	16	static
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:89:6:InitializeAppContext	16	static
