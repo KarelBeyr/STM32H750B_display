@@ -37,14 +37,14 @@ void setSTATE_F1(AppContext *ctx) {
 void validateAndSetVoltage(AppContext *ctx) {
   if (ctx->inputValue < 80 || ctx->inputValue > 400)
   {
-    strcpy(ctx->message, "Input voltage has to be in range 80 - 400. Resetting, try again!\r\n");
+    strcpy(ctx->message, "Input voltage has to be in range 80 - 400. Resetting, try again!");
     clearInput(ctx);
     return;
   }
   ctx->isVoltageEntered = true;
   ctx->voltage = ctx->inputValue;
   ctx->inputValue = 0;
-  sprintf(ctx->message, "Voltage %d has been successfully entered\r\n", ctx->voltage);
+  sprintf(ctx->message, "Voltage %d has been successfully entered", ctx->voltage);
 
 }
 
@@ -52,14 +52,15 @@ void updateInput(AppContext *ctx, KeyboardButton key) {
   uint8_t digit = key - '0';
   ctx->inputValue = ctx->inputValue * 10 + digit;
   if (ctx->inputValue > 400) {
-    strcpy(ctx->message, "Input set too high, resetting. Try again\r\n");
+    strcpy(ctx->message, "Input set too high, resetting. Try again");
     clearInput(ctx);
   }
 }
 
 void handle_event(AppContext *ctx, KeyboardButton key)
 {
-  ctx->message[0] = '\0';
+  strcpy(ctx->message, "");
+
   if (ctx->currentState == STATE_F1) {
 	if (ctx->isPwmRunning == true)
 	{

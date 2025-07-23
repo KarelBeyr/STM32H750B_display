@@ -99,6 +99,7 @@ int main(void)
   InitializeLcd();
   //CPU_CACHE_Disable();
   Draw_Menu();
+  UartClearScreen();
 
   HAL_Delay(1000);
   InitFlexiKeyboard(); // has to be AFTER BSP_LCD_Init, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
@@ -107,11 +108,13 @@ int main(void)
   /* Infinite loop */  
   while (1)
   {
-	  UartRenderState(&ctx);
-	  HAL_Delay(10);
 	  KeyboardButton key = ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
 	  if (key == KEY_NULL) continue;
 	  handle_event(&ctx, key);
+	  UartRenderState(&ctx);
+	  //CPU_CACHE_Disable();
+	  DisplayRenderState(&ctx);
+	  CPU_CACHE_Enable();
   }
 }
 

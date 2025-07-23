@@ -5,5 +5,7 @@
 void Draw_Menu(void);
 void InitializeLcd(void);
 void UartRenderState(AppContext *ctx);
+void UartClearScreen();
+void DisplayRenderState(AppContext *ctx);
 
 #endif

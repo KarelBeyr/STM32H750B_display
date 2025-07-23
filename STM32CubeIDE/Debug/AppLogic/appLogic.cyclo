@@ -8,4 +8,4 @@ C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:33:6:setSTATE_F1	1
 C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:37:6:validateAndSetVoltage	3
 C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:51:6:updateInput	3
 C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:60:6:handle_event	15
-C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:89:6:InitializeAppContext	1
+C:/projects/STM32-H750B-DK/LTDC_Paint/AppLogic/appLogic.c:91:6:InitializeAppContext	1

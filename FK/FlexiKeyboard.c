@@ -71,7 +71,7 @@ KeyboardButton ReadFlexiKeyboard(void)
                 lastTriggerTime = now;
 
                 receivedChar = keymap[row][col];
-                printf("Pressed row %d and col %d hopefully it is %c\r\n", row, col, receivedChar);
+                //printf("Pressed row %d and col %d hopefully it is %c\r\n", row, col, receivedChar);
                 return receivedChar;
             }
         }

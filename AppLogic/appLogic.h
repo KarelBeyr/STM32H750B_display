@@ -2,7 +2,7 @@
 #define AL_H_
 #include "main.h"
 
-void handle_event(AppContext *ctx, uint8_t key);
+void handle_event(AppContext *ctx, KeyboardButton key);
 void InitializeAppContext(AppContext* ctx);
 
 #endif
