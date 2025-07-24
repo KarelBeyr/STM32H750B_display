@@ -26,13 +26,9 @@
 #include "stm32h750b_discovery_ts.h"
 #include "stm32h750b_discovery_sdram.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include "stm32_lcd.h"
-#include "lcd_trace.h"
 #include <stdbool.h>
-
-/* FatFs includes component */
-#include "ff_gen_drv.h"
-#include "usbh_diskio.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

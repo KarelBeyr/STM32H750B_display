@@ -52,11 +52,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/readme.txt</locationURI>
 		</link>
 		<link>
-			<name>Utilities/lcd_trace.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Utilities/Lcd_Trace/lcd_trace.c</locationURI>
-		</link>
-		<link>
 			<name>Utilities/stm32_lcd.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Utilities/lcd/stm32_lcd.c</locationURI>
@@ -70,16 +65,6 @@
 			<name>Application/User/stm32h7xx_it.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Src/stm32h7xx_it.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/usbh_conf.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/usbh_conf.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/usbh_diskio.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/usbh_diskio.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/CMSIS/system_stm32h7xx.c</name>
@@ -260,66 +245,6 @@
 			<name>Drivers/BSP/STM32H750B-Discovery/stm32h750b_discovery_ts.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/BSP/STM32H750B-DK/stm32h750b_discovery_ts.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/FatFs/Core/diskio.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/diskio.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/FatFs/Core/ff.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/ff.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/FatFs/Core/ff_gen_drv.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/ff_gen_drv.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/FatFs/Options/syscall.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/option/syscall.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/FatFs/Options/unicode.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/option/unicode.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/STM32_USBH_Library/Core/usbh_core.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/STM32_USBH_Library/Core/usbh_ctlreq.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/STM32_USBH_Library/Core/usbh_ioreq.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/STM32_USBH_Library/Core/usbh_pipes.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/STM32_USBH_Library/Class/MSC/usbh_msc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/STM32_USBH_Library/Class/MSC/usbh_msc_bot.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/STM32_USBH_Library/Class/MSC/usbh_msc_scsi.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

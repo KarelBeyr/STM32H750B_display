@@ -28,7 +28,7 @@ int main(void)
   SystemClock_Config();
   MX_USART3_UART_Init();
 
-  printf("Starting...\r\n");
+  printf("Starting fresh...\r\n");
 
   AppContext ctx;
   InitializeAppContext(&ctx);

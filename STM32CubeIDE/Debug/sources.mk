@@ -31,9 +31,5 @@ Drivers/BSP/STM32H750B-Discovery \
 Drivers/CMSIS \
 Drivers/STM32H7xx_HAL_Driver \
 FK \
-Middlewares/FatFs/Core \
-Middlewares/FatFs/Options \
-Middlewares/STM32_USBH_Library/Class/MSC \
-Middlewares/STM32_USBH_Library/Core \
 Utilities \
 
