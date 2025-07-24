@@ -66,6 +66,8 @@ typedef struct {
     uint16_t calibration_points[3]; // For mapping
 } AppContext;
 
+typedef void (*CallbackWithParam)(uint32_t);
+typedef void (*CallbackFunction)(void);
 
 typedef enum { // A bit atypical, but I want to be able to read data from PC connected through UART for better UX
   KEY_0 = '0',

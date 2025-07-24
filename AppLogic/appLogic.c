@@ -15,16 +15,14 @@ void backspace(AppContext *ctx) {
   ctx->inputValue = ctx->inputValue / 10;
 }
 
-void stopPWM(AppContext *ctx) {
+void stopPWM(AppContext *ctx, CallbackFunction stopPwmCallback) {
   ctx->isPwmRunning = false;
-  //__HAL_TIM_SET_COMPARE(&htim11, TIM_CHANNEL_1, 0);
-  // TODO callbakc
+  stopPwmCallback();
 }
 
-void startPWM(AppContext *ctx) {
+void startPWM(AppContext *ctx, CallbackWithParam startPwmCallback) {
   ctx->isPwmRunning = true;
-  //__HAL_TIM_SET_COMPARE(&htim11, TIM_CHANNEL_1, ctx->voltage / 4);
-  // TODO callbakc
+  startPwmCallback(ctx->voltage / 4);
 }
 
 void setSTATE_F3(AppContext *ctx) {
@@ -60,7 +58,7 @@ void updateInput(AppContext *ctx, KeyboardButton key) {
   ctx->inputValue = ctx->inputValue * 10 + digit;
 }
 
-bool handle_event(AppContext *ctx, KeyboardButton key)
+bool handle_event(AppContext *ctx, KeyboardButton key, CallbackWithParam startPwmCallback, CallbackFunction stopPwmCallback)
 {
   if (key == KEY_NULL)
   {
@@ -79,13 +77,15 @@ bool handle_event(AppContext *ctx, KeyboardButton key)
   if (ctx->currentState == STATE_F1) {
 	if (ctx->isPwmRunning == true)
 	{
-	  if (key == KEY_Stop) stopPWM(ctx);
+	  if (key == KEY_Stop) stopPWM(ctx, stopPwmCallback);
 	  return false; // when PWM is running, we can only press the "STOP" button
 	}
 
 	if (ctx->isVoltageEntered == true) // valid voltage has been entered
 	{
-	  if (key == KEY_Start) startPWM(ctx);
+	  if (key == KEY_Start) {
+		  startPWM(ctx, startPwmCallback);
+	  }
       if (key == KEY_Clear) clearVoltage(ctx);
 	} else
 	{

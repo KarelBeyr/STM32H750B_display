@@ -74,9 +74,9 @@ void MX_TIM8_PWM_Init()
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF3_TIM8;
     HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
-//
+
     uint32_t timerClock = HAL_RCC_GetPCLK2Freq(); // TIM8 is on APB2
-    uint32_t prescaler = 9;
+    uint32_t prescaler = 19;
     uint32_t period = (timerClock / ((prescaler + 1) * 10000)) - 1; // 10kHz
 
     htim8.Instance = TIM8;
@@ -96,10 +96,9 @@ void MX_TIM8_PWM_Init()
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
 
     if (HAL_TIM_PWM_ConfigChannel(&htim8, &sConfigOC, TIM_CHANNEL_4) != HAL_OK) Error_Handler();
-   //  if (HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4) != HAL_OK) Error_Handler();
 }
 
-void TIM8_SetDutyCycle(uint32_t percent)
+void TIM8_Start(uint32_t percent)
 {
     uint32_t period = __HAL_TIM_GET_AUTORELOAD(&htim8);
     uint32_t pulse = (period + 1) * percent / 100;
@@ -107,13 +106,13 @@ void TIM8_SetDutyCycle(uint32_t percent)
     HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4);
 }
 
+void TIM8_Stop()
+{
+    HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_4);
+}
+
 /* Private functions ---------------------------------------------------------*/
 
-/**
-  * @brief  Main program
-  * @param  None
-  * @retval None
-  */
 int main(void)
 {
   /* Configure the MPU attributes as Write Through for SDRAM*/
@@ -133,12 +132,12 @@ int main(void)
 
   InitFlexiKeyboard(); // has to be AFTER InitializeLcd, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
   MX_TIM8_PWM_Init();
-  TIM8_SetDutyCycle(25);
+  //TIM8_Start(12);
 
   while (1)
   {
 	  KeyboardButton key = ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
-	  bool ctxChanged = handle_event(&ctx, key);
+	  bool ctxChanged = handle_event(&ctx, key, TIM8_Start, TIM8_Stop);
 	  if (!ctxChanged) continue;
 	  UartRenderState(&ctx);
 	  DisplayRenderState(&ctx);

@@ -2,7 +2,7 @@
 #define AL_H_
 #include "main.h"
 
-bool handle_event(AppContext *ctx, KeyboardButton key);
+bool handle_event(AppContext *ctx, KeyboardButton key, CallbackWithParam startPwmCallback, CallbackFunction stopPwmCallback);
 void InitializeAppContext(AppContext* ctx);
 
 #endif
