@@ -76,8 +76,8 @@ void MX_TIM8_PWM_Init()
     HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
 
     uint32_t timerClock = HAL_RCC_GetPCLK2Freq(); // TIM8 is on APB2
-    uint32_t prescaler = 19;
-    uint32_t period = (timerClock / ((prescaler + 1) * 10000)) - 1; // 10kHz
+    uint32_t prescaler = 9;
+    uint32_t period = (timerClock / ((prescaler + 1) * 5000)) - 1; // 10kHz - magic, I need to look at this deeper
 
     htim8.Instance = TIM8;
     htim8.Init.Prescaler = prescaler;
