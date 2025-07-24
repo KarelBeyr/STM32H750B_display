@@ -30,7 +30,6 @@ const KeyboardButton keymap[5][5] = {
 volatile int lastRow = -1;
 volatile int lastCol = -1;
 volatile uint32_t lastTriggerTime = 0;
-KeyboardButton receivedChar;
 
 void setAllRowsInactive(void)
 {
@@ -53,7 +52,7 @@ KeyboardButton ReadFlexiKeyboard(void)
     for (int row = 0; row < NUM_ROWS; row++)
     {
         setRowActive(row);    // Set current row LOW, others HIGH
-        HAL_Delay(10);         // Small delay for settling
+        HAL_Delay(1);         // Small delay for settling
 
         for (int col = 0; col < NUM_COLS; col++)
         {
@@ -61,8 +60,7 @@ KeyboardButton ReadFlexiKeyboard(void)
             {
                 uint32_t now = HAL_GetTick();
 
-                // Debounce/repeat suppression
-                if (lastRow == row && lastCol == col && (now - lastTriggerTime < 300)) {
+                if (lastRow == row && lastCol == col && (now - lastTriggerTime < 300)) { // Debounce/repeat suppression
                     return KEY_NULL;
                 }
 
@@ -70,7 +68,7 @@ KeyboardButton ReadFlexiKeyboard(void)
                 lastCol = col;
                 lastTriggerTime = now;
 
-                receivedChar = keymap[row][col];
+                KeyboardButton receivedChar = keymap[row][col];
                 //printf("Pressed row %d and col %d hopefully it is %c\r\n", row, col, receivedChar);
                 return receivedChar;
             }

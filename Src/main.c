@@ -1,66 +1,51 @@
 /**
-  ******************************************************************************
-  * @file    Display/LTDC_Paint/Src/main.c 
-  * @author  MCD Application Team
-  * @brief   Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
+  Based on LTDC_Paint example
   */
 
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "save.h"
-#include "color.h"
 #include "FlexiKeyboard.h"
 #include "display.h"
 #include "appLogic.h"
-#include <stdbool.h>
-/** @addtogroup STM32H7xx_HAL_Applications
-  * @{
-  */
 
-/** @addtogroup LTDC_Paint
-  * @{
-  */ 
-
-/* Private typedef -----------------------------------------------------------*/
-typedef enum {
-  APPLICATION_IDLE = 0,  
-  APPLICATION_RUNNIG    
-}MSC_ApplicationTypeDef;
-
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-
- DMA2D_HandleTypeDef hdma2d_discovery;
-
+TIM_HandleTypeDef htim8;
+DMA2D_HandleTypeDef hdma2d_discovery;
 UART_HandleTypeDef huart3;
 
-/* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void CPU_CACHE_Enable(void);
 static void MPU_Config(void);
 static void MX_USART3_UART_Init(void);
+void TIM8_Stop();
+void TIM8_Start(uint32_t percent);
+void MX_TIM8_PWM_Init();
 
-int __io_putchar(int ch) {
-  if (HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, HAL_MAX_DELAY) != HAL_OK) {
-    return -1;
+int main(void)
+{
+  MPU_Config(); // Configure the MPU attributes as Write Through for SDRAM
+  CPU_CACHE_Enable();
+  HAL_Init();
+  SystemClock_Config();
+  MX_USART3_UART_Init();
+
+  printf("Starting...\r\n");
+
+  AppContext ctx;
+  InitializeAppContext(&ctx);
+  InitializeLcd();
+  UartClearScreen();
+  InitFlexiKeyboard(); // has to be AFTER InitializeLcd, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
+  MX_TIM8_PWM_Init(); // initialize PWM output on pin PI2
+
+  while (1)
+  {
+	  KeyboardButton key = ReadFlexiKeyboard(); // approx 5ms blocking code to scan the keyboard
+	  bool ctxChanged = handle_event(&ctx, key, TIM8_Start, TIM8_Stop);
+	  if (!ctxChanged) continue; // no need to redraw display
+	  UartRenderState(&ctx);
+	  DisplayRenderState(&ctx);
   }
-  return ch;
 }
-
-TIM_HandleTypeDef htim8;
 
 void MX_TIM8_PWM_Init()
 {
@@ -111,37 +96,11 @@ void TIM8_Stop()
     HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_4);
 }
 
-/* Private functions ---------------------------------------------------------*/
-
-int main(void)
-{
-  /* Configure the MPU attributes as Write Through for SDRAM*/
-  MPU_Config();
-  CPU_CACHE_Enable();
-  HAL_Init();
-  SystemClock_Config();
-  MX_USART3_UART_Init();
-
-  printf("Starting...\r\n");
-
-  AppContext ctx;
-  InitializeAppContext(&ctx);
-
-  InitializeLcd();
-  UartClearScreen();
-
-  InitFlexiKeyboard(); // has to be AFTER InitializeLcd, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
-  MX_TIM8_PWM_Init();
-  //TIM8_Start(12);
-
-  while (1)
-  {
-	  KeyboardButton key = ReadFlexiKeyboard(); // approx 25ms blocking code to scan the keyboard
-	  bool ctxChanged = handle_event(&ctx, key, TIM8_Start, TIM8_Stop);
-	  if (!ctxChanged) continue;
-	  UartRenderState(&ctx);
-	  DisplayRenderState(&ctx);
+int __io_putchar(int ch) {
+  if (HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, HAL_MAX_DELAY) != HAL_OK) {
+    return -1;
   }
+  return ch;
 }
 
 static void MX_USART3_UART_Init(void)
