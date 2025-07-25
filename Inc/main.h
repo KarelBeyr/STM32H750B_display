@@ -36,10 +36,7 @@
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-void Touchscreen_Calibration (void);
-uint16_t Calibration_GetX(uint16_t x);
-uint16_t Calibration_GetY(uint16_t y);
-uint8_t IsCalibrationDone(void);
+
 
 typedef enum {
     STATE_F1,
@@ -57,9 +54,8 @@ typedef struct {
   bool isPwmRunning;
   bool displayCursor;
   char message[64]; // ad hoc message to display
-
-    // F2 - screen where user sets three calibration points - TODO later
-    uint16_t calibration_points[3]; // For mapping
+    
+  uint16_t calibration_points[3]; // // F2 - screen where user sets three calibration points - TODO later
 } AppContext;
 
 typedef void (*CallbackWithParam)(uint32_t);
