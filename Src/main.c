@@ -17,7 +17,7 @@ static void CPU_CACHE_Enable(void);
 static void MPU_Config(void);
 static void MX_USART3_UART_Init(void);
 void TIM8_Stop();
-void TIM8_Start(uint32_t percent);
+void TIM8_Start(uint16_t percent);
 void MX_TIM8_PWM_Init();
 
 int main(void)
@@ -83,8 +83,9 @@ void MX_TIM8_PWM_Init()
     if (HAL_TIM_PWM_ConfigChannel(&htim8, &sConfigOC, TIM_CHANNEL_4) != HAL_OK) Error_Handler();
 }
 
-void TIM8_Start(uint32_t percent)
+void TIM8_Start(uint16_t percent)
 {
+	// TODO convert voltage to PWM percentage using calibration points
     uint32_t period = __HAL_TIM_GET_AUTORELOAD(&htim8);
     uint32_t pulse = (period + 1) * percent / 100;
     __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, pulse);

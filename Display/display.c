@@ -1,4 +1,5 @@
 #include "display.h"
+#include "appLogic.h"
 
 uint32_t x_size, y_size;
 #define LCD_LINE_WIDTH 24
@@ -76,6 +77,30 @@ void displayPaddedLine(uint16_t y, const char *text)
     UTIL_LCD_DisplayStringAt(0, y*32, (uint8_t *)padded, LEFT_MODE);
 }
 
+char getCursor(AppContext *ctx)
+{
+	return ctx->displayCursor ? '_' : ' ';
+}
+
+const char* getValueWithCursor(AppContext *ctx) {
+    static char result[7];  // adjust size as needed
+    if (ctx->inputValue != 0)
+        sprintf(result, "%d%c", ctx->inputValue, getCursor(ctx));
+    else
+        sprintf(result, "%c", getCursor(ctx));
+    return result;
+}
+
+void DrawCalibrationLine(AppContext *ctx, uint16_t voltage, uint8_t idx)
+{
+	char buffer[LCD_LINE_WIDTH+1];
+    if (ctx->calibrationIndex == idx)
+    	sprintf(buffer, "PWM %% for %dV: %s", voltage, getValueWithCursor(ctx));
+    else
+    	sprintf(buffer, "PWM %% for %dV: %d", voltage, ctx->calibrationPoints[idx]);
+    displayPaddedLine(idx+1, buffer);
+}
+
 void DisplayRenderState(AppContext *ctx)
 {
   char buffer[LCD_LINE_WIDTH+1];
@@ -83,39 +108,40 @@ void DisplayRenderState(AppContext *ctx)
   if (ctx->currentState == STATE_F1) {
 	displayPaddedLine(0, "F1: Voltage control");
     if (ctx->isPwmRunning == true) {
-      sprintf(buffer, "PWM is running at %dV", ctx->voltage);
-      displayPaddedLine(2, buffer);
+        sprintf(buffer, "PWM is running at %dV", ctx->voltage);
+        displayPaddedLine(1, buffer);
+
+        sprintf(buffer, "PWM duty %d%%", GetPwmForVoltage(ctx));
+        displayPaddedLine(2, buffer);
+
       displayPaddedLine(3, "Press STOP");
     }
     else if (ctx->isVoltageEntered)
     {
 	  sprintf(buffer, "Voltage: %dV", ctx->voltage);
-      displayPaddedLine(2, buffer);
-      displayPaddedLine(3, "Press START or Clear");
+      displayPaddedLine(1, buffer);
+      displayPaddedLine(2, "Press START or Clear");
+      displayPaddedLine(3, "");
     }
     else
     {
-	  char cursor = ' ';
-	  if (ctx->displayCursor) cursor = '_';
-	  if (ctx->inputValue != 0)
-		  sprintf(buffer, "Enter voltage: %d%c", ctx->inputValue, cursor);
-	  else
-		  sprintf(buffer, "Enter voltage: %c", cursor);
-
-      displayPaddedLine(2, buffer);
-      displayPaddedLine(3, "Press Enter");
+	  sprintf(buffer, "Enter voltage: %s", getValueWithCursor(ctx));
+      displayPaddedLine(1, buffer);
+      displayPaddedLine(2, "Press Enter");
+      displayPaddedLine(3, "");
     }
   }
   else if (ctx->currentState == STATE_F2)
   {
-    displayPaddedLine(0, "F2: Voltage and current");
-    displayPaddedLine(1, "");
-    displayPaddedLine(2, "");
-    displayPaddedLine(3, "");
+    displayPaddedLine(0, "F2: Calibration");
+
+    DrawCalibrationLine(ctx, 80, 0);
+    DrawCalibrationLine(ctx, 200, 1);
+    DrawCalibrationLine(ctx, 400, 2);
   }
   else if (ctx->currentState == STATE_F3)
   {
-	displayPaddedLine(0, "F3: Calibration");
+	displayPaddedLine(0, "F3: Voltage and current");
     displayPaddedLine(1, "");
     displayPaddedLine(2, "");
     displayPaddedLine(3, "");

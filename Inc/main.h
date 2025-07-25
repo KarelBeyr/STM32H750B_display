@@ -46,19 +46,21 @@ typedef enum {
 
 typedef struct {
   AppState currentState;
-
-	// F1 - screen where user enters voltage and can start/stop PWM
+  
+  // F1 - screen where user enters voltage and can start/stop PWM
   uint16_t voltage; // register holding voltage that has been validated and is ready to be sent to PWM
   uint16_t inputValue; // register holding current value of "input field"
   bool isVoltageEntered; // flag if we are ready to start PWM. Maybe redundant, we can check against voltage register. But its more robust this way
   bool isPwmRunning;
   bool displayCursor;
   char message[64]; // ad hoc message to display
-    
-  uint16_t calibration_points[3]; // // F2 - screen where user sets three calibration points - TODO later
+  
+  // F2 - screen where user sets three calibration points - TODO later
+  uint16_t calibrationPoints[3]; 
+  uint8_t calibrationIndex; // which calibration point are we entering right now?
 } AppContext;
 
-typedef void (*CallbackWithParam)(uint32_t);
+typedef void (*CallbackWithParam)(uint16_t);
 typedef void (*CallbackFunction)(void);
 
 typedef enum { // A bit atypical, but I want to be able to read data from PC connected through UART for better UX
