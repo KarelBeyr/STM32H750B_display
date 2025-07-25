@@ -138,6 +138,55 @@ void DisplayRenderState(AppContext *ctx)
     DrawCalibrationLine(ctx, 80, 0);
     DrawCalibrationLine(ctx, 200, 1);
     DrawCalibrationLine(ctx, 400, 2);
+
+    uint16_t cx = 50;
+    uint16_t cy = 250;
+    uint16_t dx = 400;
+    uint16_t dy = 80;
+
+    UTIL_LCD_FillRect(cx+1, cy-dy, dx, dy, UTIL_LCD_COLOR_BLACK);
+    ClearCache();
+
+    UTIL_LCD_DrawLine(cx, cy, cx+dx, cy, UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DrawLine(cx, cy, cx, cy-dy, UTIL_LCD_COLOR_WHITE);
+
+    UTIL_LCD_DrawLine(cx+(dx / 5), cy, cx+(dx / 5), cy-5, UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DrawLine(cx+(dx / 2), cy, cx+(dx / 2), cy-5, UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DrawLine(cx+dx, cy, cx+dx, cy-5, UTIL_LCD_COLOR_WHITE);
+
+    uint16_t y0 = cy - (ctx->calibrationPoints[0] * dy / 100);
+    uint16_t y1 = cy - (ctx->calibrationPoints[1] * dy / 100);
+    uint16_t y2 = cy - (ctx->calibrationPoints[2] * dy / 100);
+
+    UTIL_LCD_DrawLine(cx, y0, cx+5, y0, UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DrawLine(cx, y1, cx+5, y1, UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DrawLine(cx, y2, cx+5, y2, UTIL_LCD_COLOR_WHITE);
+
+    UTIL_LCD_SetFont(&Font16);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DisplayStringAt(cx+(dx/5)-15, cy+8, (uint8_t *)"80V", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(cx+(dx/2)-20, cy+8, (uint8_t *)"200V", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(cx+dx-25, cy+8, (uint8_t *)"400V", LEFT_MODE);
+
+    sprintf(buffer, "%d%%", ctx->calibrationPoints[0]);
+    UTIL_LCD_DisplayStringAt(cx-35, y0-6, (uint8_t *)buffer,LEFT_MODE);
+    sprintf(buffer, "%d%%", ctx->calibrationPoints[1]);
+    UTIL_LCD_DisplayStringAt(cx-35, y1-6, (uint8_t *)buffer,LEFT_MODE);
+    sprintf(buffer, "%d%%", ctx->calibrationPoints[2]);
+    uint16_t shift = 0;
+    if (ctx->calibrationPoints[2] == 100) shift = -2;
+    UTIL_LCD_DisplayStringAt(cx-35+shift, y2-6, (uint8_t *)buffer,LEFT_MODE);
+
+    UTIL_LCD_DrawLine(cx+(dx / 5), y0, cx+(dx / 2), y1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+    UTIL_LCD_DrawLine(cx+(dx / 5), y0+1, cx+(dx / 2), y1+1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+
+    UTIL_LCD_DrawLine(cx+(dx / 2), y1, cx+dx, y2, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+    UTIL_LCD_DrawLine(cx+(dx / 2), y1+1, cx+dx, y2+1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+
+    UTIL_LCD_SetFont(&Font32);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+
+    //UTIL_LCD_DrawLine(cx, cy, cx, 140, UTIL_LCD_COLOR_WHITE);
   }
   else if (ctx->currentState == STATE_F3)
   {

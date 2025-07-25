@@ -6,6 +6,10 @@ void clearInput(AppContext *ctx) {
   ctx->inputValue = 0;
 }
 
+void revertCalibration(AppContext *ctx) {
+  ctx->inputValue = ctx->calibrationPoints[ctx->calibrationIndex];
+}
+
 void clearVoltage(AppContext *ctx) {
   ctx->voltage = 0;
   ctx->isVoltageEntered = false;
@@ -138,7 +142,8 @@ bool handle_event(AppContext *ctx, KeyboardButton key, CallbackWithParam startPw
 	if (key >= KEY_0 && key <= KEY_9) updateInput(ctx, key, 10);
 	if (key == KEY_Enter) validateAndSetCalibration(ctx);
 	if (key == KEY_BkSp) backspace(ctx);
-	if (key == KEY_ESC) clearInput(ctx);
+	if (key == KEY_ESC) revertCalibration(ctx);
+	if (key == KEY_Clear) clearInput(ctx);
 	if (key == KEY_F1) setSTATE_F1(ctx);
 	if (key == KEY_F3) setSTATE_F3(ctx);
   }
@@ -150,8 +155,8 @@ bool handle_event(AppContext *ctx, KeyboardButton key, CallbackWithParam startPw
 return true;
 }
 
-void InitializeAppContext(AppContext* ctx) {
-	ctx->currentState = STATE_F1;
+void InitializeAppContext(AppContext* ctx)
+{
 	ctx->isVoltageEntered = false;
 	ctx->isPwmRunning = false;
 	ctx->voltage = 0;
@@ -161,4 +166,6 @@ void InitializeAppContext(AppContext* ctx) {
 	ctx->calibrationPoints[0] = 20; // TODO - persist those values in flash
 	ctx->calibrationPoints[1] = 50;
 	ctx->calibrationPoints[2] = 100;
+
+	setSTATE_F2(ctx);
 }
