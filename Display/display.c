@@ -1,13 +1,31 @@
 #include "display.h"
 #include "appLogic.h"
+#include "stm32_lcd.h"
 
 uint32_t x_size, y_size;
 #define LCD_LINE_WIDTH 24
 
+#define LCD_WIDTH  480
+#define LCD_HEIGHT 272
+#define BUFFER_SIZE (LCD_WIDTH * LCD_HEIGHT * 4) // ARGB8888 format = 4 bytes per pixel
+
+#define FRAMEBUFFER1_ADDR ((uint32_t *)SDRAM_DEVICE_ADDR)
+#define FRAMEBUFFER2_ADDR ((uint32_t *)(SDRAM_DEVICE_ADDR + BUFFER_SIZE))
+
+uint32_t *frontBuffer = FRAMEBUFFER1_ADDR;
+uint32_t *backBuffer  = FRAMEBUFFER2_ADDR;
+
+//extern LTDC_HandleTypeDef hlcd_ltdc;
+
+uint32_t foregroundColor = UTIL_LCD_COLOR_GREEN; // Default: white
+uint32_t backgroundColor = UTIL_LCD_COLOR_BLACK; // Default: black
+sFONT *font = &Font32;
+
 void ClearCache()
 {
 	// otherwise I get LCD artefacts
-	SCB_CleanDCache_by_Addr((void *)SDRAM_DEVICE_ADDR, 480*272*4);
+	//SCB_CleanDCache_by_Addr((void *)SDRAM_DEVICE_ADDR, 480*272*4*2);
+	SCB_CleanDCache_by_Addr((uint32_t *)backBuffer, BUFFER_SIZE);
 }
 
 void InitializeLcd(void)
@@ -21,6 +39,11 @@ void InitializeLcd(void)
 
   /* Clear the LCD Background layer */
   UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
+
+  BSP_LCD_SetLayerAddress(0, 0, (uint32_t)backBuffer);
+  HAL_LTDC_Reload(&hlcd_ltdc, LTDC_RELOAD_VERTICAL_BLANKING);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_BLACK);
+
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
 
@@ -61,20 +84,92 @@ void UartRenderState(AppContext *ctx) {
   }
 }
 
+void DrawPixel(uint16_t x, uint16_t y, uint32_t color)
+{
+    uint32_t index = y * LCD_WIDTH + x;
+    backBuffer[index] = color;
+}
+
+
+void DrawLine(int x0, int y0, int x1, int y1, uint32_t color)
+{
+    int dx = abs(x1 - x0);
+    int sx = x0 < x1 ? 1 : -1;
+    int dy = -abs(y1 - y0);
+    int sy = y0 < y1 ? 1 : -1;
+    int err = dx + dy;  // error term
+
+    while (1)
+    {
+        DrawPixel(x0, y0, color);
+
+        if (x0 == x1 && y0 == y1)
+            break;
+
+        int e2 = 2 * err;
+        if (e2 >= dy)
+        {
+            err += dy;
+            x0 += sx;
+        }
+        if (e2 <= dx)
+        {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
+
+void DrawChar(uint16_t x, uint16_t y, char c)
+{
+    uint16_t i, j;
+    uint16_t width = font->Width;
+    uint16_t height = font->Height;
+    uint8_t bytesPerRow = (width + 7) / 8;
+
+    const uint8_t *char_table = font->table + (c - 32) * height * bytesPerRow;
+
+    for (i = 0; i < height; i++)
+    {
+        for (j = 0; j < width; j++)
+        {
+            // Find the byte and bit for this pixel
+            uint8_t byte = char_table[i * bytesPerRow + (j / 8)];
+            uint8_t bit = 1 << (7 - (j % 8));
+
+            if (byte & bit)
+            	DrawPixel(x + j, y + i, foregroundColor);
+            else
+            	DrawPixel(x + j, y + i, backgroundColor);
+        }
+    }
+}
+
+void DrawText(uint16_t x, uint16_t y, uint8_t *text)
+{
+    while (*text)
+    {
+        DrawChar(x, y, *text);
+        x += font->Width;
+        text++;
+    }
+}
+
 void displayPaddedLine(uint16_t y, const char *text)
 {
 	// the sole purpose of this helper method is to overwrite the whole row so that we do not need to rely on clear screen
+//
+//    char padded[LCD_LINE_WIDTH];
+//    memset(padded, ' ', LCD_LINE_WIDTH);
+//
+//    size_t len = strlen(text);
+//    if (len > LCD_LINE_WIDTH) len = LCD_LINE_WIDTH;
+//    memcpy(padded, text, len);
 
-    char padded[LCD_LINE_WIDTH];
-    memset(padded, ' ', LCD_LINE_WIDTH);
 
-    // Copy up to 24 characters from text
-    size_t len = strlen(text);
-    if (len > LCD_LINE_WIDTH) len = LCD_LINE_WIDTH;
-    memcpy(padded, text, len);
 
-    // Display the padded string
-    UTIL_LCD_DisplayStringAt(0, y*32, (uint8_t *)padded, LEFT_MODE);
+    DrawText(0, y*(font->Height), (uint8_t *)text);
 }
 
 char getCursor(AppContext *ctx)
@@ -101,11 +196,34 @@ void DrawCalibrationLine(AppContext *ctx, uint16_t voltage, uint8_t idx)
     displayPaddedLine(idx+1, buffer);
 }
 
+void RenderNewFrame() // do the double buffering magic
+{
+  ClearCache();
+
+  BSP_LCD_SetLayerAddress(0, 0, (uint32_t)backBuffer);
+  HAL_LTDC_Reload(&hlcd_ltdc, LTDC_RELOAD_VERTICAL_BLANKING);
+
+  // Swap pointers
+  uint32_t *temp = frontBuffer;
+  frontBuffer = backBuffer;
+  backBuffer = temp;
+}
+
 void DisplayRenderState(AppContext *ctx)
 {
   char buffer[LCD_LINE_WIDTH+1];
+  for (int x = 0; x < 480; x++) // basically clear screen. TODO: Make it much faster
+  {
+	  for (int y = 0; y <272; y++)
+	  {
+		  DrawPixel(x, y, UTIL_LCD_COLOR_BLACK);
+	  }
+  }
+  font = &Font32;
+  foregroundColor = UTIL_LCD_COLOR_GREEN;
 
   if (ctx->currentState == STATE_F1) {
+	  //font = &Font40;
 	displayPaddedLine(0, "F1: Voltage control");
     if (ctx->isPwmRunning == true) {
         sprintf(buffer, "PWM is running at %dV", ctx->voltage);
@@ -133,8 +251,8 @@ void DisplayRenderState(AppContext *ctx)
   }
   else if (ctx->currentState == STATE_F2)
   {
-    displayPaddedLine(0, "F2: Calibration");
-
+	font = &Font24;
+    DrawText(0, 0, (uint8_t *)"F2: Calibration");
     DrawCalibrationLine(ctx, 80, 0);
     DrawCalibrationLine(ctx, 200, 1);
     DrawCalibrationLine(ctx, 400, 2);
@@ -142,51 +260,44 @@ void DisplayRenderState(AppContext *ctx)
     uint16_t cx = 50;
     uint16_t cy = 250;
     uint16_t dx = 400;
-    uint16_t dy = 80;
+    uint16_t dy = 120;
 
-    UTIL_LCD_FillRect(cx+1, cy-dy, dx, dy, UTIL_LCD_COLOR_BLACK);
-    ClearCache();
+    DrawLine(cx, cy, cx+dx, cy, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx, cy, cx, cy-dy, UTIL_LCD_COLOR_WHITE);
 
-    UTIL_LCD_DrawLine(cx, cy, cx+dx, cy, UTIL_LCD_COLOR_WHITE);
-    UTIL_LCD_DrawLine(cx, cy, cx, cy-dy, UTIL_LCD_COLOR_WHITE);
-
-    UTIL_LCD_DrawLine(cx+(dx / 5), cy, cx+(dx / 5), cy-5, UTIL_LCD_COLOR_WHITE);
-    UTIL_LCD_DrawLine(cx+(dx / 2), cy, cx+(dx / 2), cy-5, UTIL_LCD_COLOR_WHITE);
-    UTIL_LCD_DrawLine(cx+dx, cy, cx+dx, cy-5, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx+(dx / 5), cy, cx+(dx / 5), cy-5, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx+(dx / 2), cy, cx+(dx / 2), cy-5, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx+dx, cy, cx+dx, cy-5, UTIL_LCD_COLOR_WHITE);
 
     uint16_t y0 = cy - (ctx->calibrationPoints[0] * dy / 100);
     uint16_t y1 = cy - (ctx->calibrationPoints[1] * dy / 100);
     uint16_t y2 = cy - (ctx->calibrationPoints[2] * dy / 100);
 
-    UTIL_LCD_DrawLine(cx, y0, cx+5, y0, UTIL_LCD_COLOR_WHITE);
-    UTIL_LCD_DrawLine(cx, y1, cx+5, y1, UTIL_LCD_COLOR_WHITE);
-    UTIL_LCD_DrawLine(cx, y2, cx+5, y2, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx, y0, cx+5, y0, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx, y1, cx+5, y1, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx, y2, cx+5, y2, UTIL_LCD_COLOR_WHITE);
 
-    UTIL_LCD_SetFont(&Font16);
-    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
-    UTIL_LCD_DisplayStringAt(cx+(dx/5)-15, cy+8, (uint8_t *)"80V", LEFT_MODE);
-    UTIL_LCD_DisplayStringAt(cx+(dx/2)-20, cy+8, (uint8_t *)"200V", LEFT_MODE);
-    UTIL_LCD_DisplayStringAt(cx+dx-25, cy+8, (uint8_t *)"400V", LEFT_MODE);
+    font = &Font16;
+    foregroundColor = UTIL_LCD_COLOR_WHITE;
+    DrawText(cx+(dx/5)-15, cy+8, (uint8_t *)"80V");
+    DrawText(cx+(dx/2)-20, cy+8, (uint8_t *)"200V");
+    DrawText(cx+dx-25, cy+8, (uint8_t *)"400V");
 
     sprintf(buffer, "%d%%", ctx->calibrationPoints[0]);
-    UTIL_LCD_DisplayStringAt(cx-35, y0-6, (uint8_t *)buffer,LEFT_MODE);
+    DrawText(cx-35, y0-6, (uint8_t *)buffer);
     sprintf(buffer, "%d%%", ctx->calibrationPoints[1]);
-    UTIL_LCD_DisplayStringAt(cx-35, y1-6, (uint8_t *)buffer,LEFT_MODE);
+    DrawText(cx-35, y1-6, (uint8_t *)buffer);
     sprintf(buffer, "%d%%", ctx->calibrationPoints[2]);
     uint16_t shift = 0;
-    if (ctx->calibrationPoints[2] == 100) shift = -2;
-    UTIL_LCD_DisplayStringAt(cx-35+shift, y2-6, (uint8_t *)buffer,LEFT_MODE);
+    if (ctx->calibrationPoints[2] == 100) shift = -10;
+    DrawText(cx-35+shift, y2-6, (uint8_t *)buffer);
 
-    UTIL_LCD_DrawLine(cx+(dx / 5), y0, cx+(dx / 2), y1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
-    UTIL_LCD_DrawLine(cx+(dx / 5), y0+1, cx+(dx / 2), y1+1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+    DrawLine(cx+(dx / 5), y0, cx+(dx / 2), y1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+    DrawLine(cx+(dx / 5), y0+1, cx+(dx / 2), y1+1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
 
-    UTIL_LCD_DrawLine(cx+(dx / 2), y1, cx+dx, y2, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
-    UTIL_LCD_DrawLine(cx+(dx / 2), y1+1, cx+dx, y2+1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
-
-    UTIL_LCD_SetFont(&Font32);
-    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
-
-    //UTIL_LCD_DrawLine(cx, cy, cx, 140, UTIL_LCD_COLOR_WHITE);
+    DrawLine(cx+(dx / 2), y1, cx+dx, y2, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+    DrawLine(cx+(dx / 2), y1+1, cx+dx, y2+1, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+    font = &Font24; // for potential error message
   }
   else if (ctx->currentState == STATE_F3)
   {
@@ -196,9 +307,8 @@ void DisplayRenderState(AppContext *ctx)
     displayPaddedLine(3, "");
   }
 
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+  foregroundColor = UTIL_LCD_COLOR_RED;
   displayPaddedLine(4, ctx->message);
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
 
-  ClearCache();
+  RenderNewFrame();
 }
