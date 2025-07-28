@@ -20,6 +20,13 @@ void TIM8_Stop();
 void TIM8_Start(uint16_t percent);
 void MX_TIM8_PWM_Init();
 
+
+static void MMC_Config(void) {
+    int32_t mmc_state = BSP_MMC_Init(0);
+}
+
+
+
 int main(void)
 {
   MPU_Config(); // Configure the MPU attributes as Write Through for SDRAM
@@ -36,6 +43,7 @@ int main(void)
   UartClearScreen();
   InitFlexiKeyboard(); // has to be AFTER InitializeLcd, which initializes PK1 as LTDC_G6 pin. We override it, so we might lose some precision on green channel.
   MX_TIM8_PWM_Init(); // initialize PWM output on pin PI2
+  MMC_Config();
 
   while (1)
   {

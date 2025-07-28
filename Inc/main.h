@@ -25,6 +25,7 @@
 #include "stm32h750b_discovery_lcd.h"
 #include "stm32h750b_discovery_ts.h"
 #include "stm32h750b_discovery_sdram.h"
+#include "stm32h750b_discovery_mmc.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "stm32_lcd.h"
